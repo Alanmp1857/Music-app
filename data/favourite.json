@@ -1,0 +1,20 @@
+{
+  "user-favourite": [
+    {
+      "id": "bea4",
+      "user": "alanmathew1857@gmail.com",
+      "songId": "8ENeUZSU",
+      "name": "Stick Season",
+      "image": "https://c.saavncdn.com/658/Stick-Season-We-ll-All-Be-Here-Forever-English-2023-20230609063700-500x500.jpg",
+      "downloadUrl": "https://aac.saavncdn.com/658/3b5b030a5c032cd14be7fc3504004696_320.mp4"
+    },
+    {
+      "id": "bd2e",
+      "user": "alanmathew1857@gmail.com",
+      "songId": "J_iY7ElH",
+      "name": "Cruel Summer",
+      "image": "https://c.saavncdn.com/228/Lover-English-2019-20190823031817-500x500.jpg",
+      "downloadUrl": "https://aac.saavncdn.com/228/5f0cab0e8447638acfdfe39ff14dd92d_320.mp4"
+    }
+  ]
+}
