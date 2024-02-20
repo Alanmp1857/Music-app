@@ -1,5 +1,5 @@
 import Dashboard from "./components/dashboard/Dashboard";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Premium from "./components/premium/Premium";
 import BrowseContainer from "./components/dashboard/browse/BrowseContainer";
 import HomePage from "./components/dashboard/HomePage";
@@ -10,19 +10,8 @@ import ShowAlbumList from "./components/dashboard/listenNow/albums/ShowAlbumList
 import ShowPlaylistEnglish from "./components/dashboard/browse/englishPlaylist/ShowPlaylistEnglish";
 import Library from "./components/dashboard/librarySongs/Library";
 import "./App.css";
-import { Auth0ContextInterface, useAuth0 } from "@auth0/auth0-react";
-import { useEffect } from "react";
 
 function App() {
-  const { isAuthenticated, loginWithPopup }: Auth0ContextInterface = useAuth0();
-
-  // useEffect(() => {
-  //   // Check if the user is not authenticated and redirect to the login page
-  //   if (!isAuthenticated) {
-  //     loginWithPopup();
-  //   }
-  // }, [isAuthenticated, loginWithPopup]);
-
   return (
     <div>
       <BrowserRouter>
@@ -37,11 +26,6 @@ function App() {
           <Route path="/playlist/:id" element={<ShowPlaylistEnglish />} />
           <Route path="/album/:id" element={<ShowAlbumList />} />
           <Route path="/library" element={<Library />} />
-          {/* {isAuthenticated ? (
-            <Route path="/library" element={<Library />} />
-          ) : (
-            <Route path="/library" element={<Link to="/library" replace />} />
-          )} */}
         </Routes>
       </BrowserRouter>
     </div>

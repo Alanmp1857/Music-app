@@ -3,8 +3,6 @@
 /// <reference types="cypress" />
 import { mount } from "cypress/react18";
 import { MemoryRouter } from "react-router-dom";
-import { Auth0Provider } from "@auth0/auth0-react";
-import { ThemeProvider } from "@mui/material/styles";
 import Header from "./Header";
 
 // Mock Auth0Provider for testing authentication

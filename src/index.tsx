@@ -15,7 +15,6 @@ root.render(
       clientId="DcLEEM2FOA2ycqcegDUfumapcM6Mhkhe"
       authorizationParams={{
         redirect_uri: window.location.origin,
-        // scope: "openid profile email",
       }}>
       <App />
     </Auth0Provider>
