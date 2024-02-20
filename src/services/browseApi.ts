@@ -1,13 +1,13 @@
-export const baseURL = "https://saavn.me/modules?language=";
+export const baseURL = "https://saavn.dev/modules?language=";
 
-export const popularPlaylistURL = "https://saavn.me/playlists?id=";
+export const popularPlaylistURL = "https://saavn.dev/playlists?id=";
 
-export const albumURL = "https://saavn.me/search/albums?query=";
+export const albumURL = "https://saavn.dev/search/albums?query=";
 
-export const albumByIdURL = "https://saavn.me/albums?id=";
+export const albumByIdURL = "https://saavn.dev/albums?id=";
 
-export const searchSongURL = `https://saavn.me/search/songs?query=`;
+export const searchSongURL = `https://saavn.dev/search/songs?query=`;
 
-export const searchSongResultURL = `https://saavn.me/songs?id=`;
+export const searchSongResultURL = `https://saavn.dev/songs?id=`;
 
-export const searchTrendingPlaylistURL = `https://saavn.me/search/playlists?query=`;
+export const searchTrendingPlaylistURL = `https://saavn.dev/search/playlists?query=`;
