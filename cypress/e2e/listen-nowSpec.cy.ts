@@ -19,13 +19,4 @@ describe("<HomePage />", () => {
     cy.visit("http://localhost:3000/album/12411331");
     cy.contains("Song List");
   });
-
-  // it("should show trending artists text", () => {
-  //   cy.get('[data-testid="listen-now-card"]').click({ multiple: true });
-  //   cy.url({ timeout: 10000 }).should(
-  //     "eq",
-  //     "http://localhost:3000/album/12411331"
-  //   );
-  //   cy.contains("Song List");
-  // });
 });

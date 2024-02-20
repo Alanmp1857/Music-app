@@ -1,8 +1,3 @@
-import React from "react";
-import HomePage from "../../src/components/dashboard/HomePage";
-import { mount } from "cypress/react18";
-import { MemoryRouter } from "react-router";
-
 describe("<HomePage />", () => {
   beforeEach(() => {
     cy.visit("http://localhost:3000/");

@@ -51,6 +51,7 @@ interface SongCardProps {
 const SongCard: React.FC<SongCardProps> = ({ song }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [favoriteSongs, setFavoriteSongs] = useState([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isPlaying, setIsPlaying] = useState(false);
   const { user, isAuthenticated } = useAuth0();
   const email = user?.email;
@@ -154,6 +155,7 @@ const SongCard: React.FC<SongCardProps> = ({ song }) => {
 
       return () => {
         // Clean up the event listener when the component unmounts
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         audioRef.current?.removeEventListener("playing", handlePlaying);
       };
     }
