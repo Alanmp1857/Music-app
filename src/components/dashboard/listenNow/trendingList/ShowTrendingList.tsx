@@ -114,7 +114,7 @@ const ShowTrendingList: React.FC = () => {
       setActiveAudio(null);
       setIsPlaying({});
     }
-  }, [searchResults]);
+  }, [searchResults, activeAudio]);
 
   return (
     <div style={{ marginLeft: "300px", marginTop: "100px" }}>
