@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Grid } from "@mui/material";
-import axios from "axios";
 import SearchSongCard from "./SearchSongCard";
 import { Link } from "react-router-dom";
 import { searchSongURL } from "../../../services/browseApi";
@@ -13,29 +12,29 @@ const SearchSong: React.FC<SearchSongProps> = ({ query }) => {
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
 
-  const limit = "&page=1&limit=8";
+  const limit = 8;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(searchSongURL + `${query}` + limit);
-        const data = response.data;
+        // const response = await axios.get(searchSongURL + `${query}` + limit);
+        const data = await fetch(
+          `${searchSongURL}?query=${query}&limit=${limit}`
+        );
+        const response = await data.json();
+        console.log(response.data.results);
 
-        if (data.status === "SUCCESS") {
-          // Extract relevant information from the API response
-          const results = data.data.results;
-          const songsInfo: any[] = results.map((result: any) => ({
-            id: result.id,
-            name: result.name,
-            image: result.image[2].link,
-            primaryArtists: result.primaryArtists,
-            album: result.album.name,
-          }));
+        // Extract relevant information from the API response
+        const results = response.data.results;
+        const songsInfo: any[] = results.map((result: any) => ({
+          id: result.id,
+          name: result.name,
+          image: result.image[2].url,
+          primaryArtists: result.primaryArtists,
+          album: result.album.name,
+        }));
 
-          setSearchResults(songsInfo);
-        } else {
-          console.error("Error in API response:", data.message);
-        }
+        setSearchResults(songsInfo);
       } catch (error) {
         console.error("Error fetching data:", error);
       }

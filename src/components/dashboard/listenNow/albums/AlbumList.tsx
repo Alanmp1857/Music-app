@@ -5,11 +5,11 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Box, Grid, IconButton } from "@mui/material";
 import AlbumListCard from "./AlbumListCard";
 import { Link } from "react-router-dom";
-import { albumURL } from "../../../../services/browseApi";
+import { albumURL, searchAlbumURL } from "../../../../services/browseApi";
 
 // Define the Image interface
 interface Image {
-  link: string;
+  url: string;
 }
 
 // Define the Album interface
@@ -30,9 +30,13 @@ const AlbumList = () => {
     // Fetch data using axios
     const fetchData = async () => {
       try {
-        const response = await axios.get(albumURL + query);
+        const data = await fetch(
+          `https://saavn.dev/api/search/albums?query=${query}&limit=10`
+        );
+        const response = await data.json();
         // Set the fetched albums in the state
-        setAlbums(response.data.data.results || []);
+        // console.log(response);
+        setAlbums(response.data.results || []);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -103,7 +107,7 @@ const AlbumList = () => {
             <Grid item xs={1} sm={1} md={1}>
               <AlbumListCard
                 id={album.id}
-                image={album.image[2].link}
+                image={album.image[2].url}
                 name={album.name}
               />
             </Grid>

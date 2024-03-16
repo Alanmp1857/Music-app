@@ -4,22 +4,23 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Box, Grid, IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
-import { baseURL } from "../../../../services/browseApi";
+import { baseURL, searchAlbumURL } from "../../../../services/browseApi";
 import PlaylistCard from "../PlaylistCard";
 
 // Define the Playlist interface
 
 interface Image {
-  link: string;
+  url: string;
 }
 interface PlayList {
   id: string;
-  title: string;
+  name: string;
   image: Image[];
 }
 
 // Default query string
 const query = "english";
+const limit = 10;
 
 // Component for displaying trending English playlists
 const EnglishPlaylist = () => {
@@ -29,14 +30,28 @@ const EnglishPlaylist = () => {
 
   // Fetch playlists data from the server when the component mounts
   useEffect(() => {
-    axios
-      .get(baseURL + query)
-      .then((response) => {
-        setPlaylists(response.data.data.playlists || []);
-      })
-      .catch((error) => {
+    // axios
+    //   .get(baseURL + query)
+    //   .then((response) => {
+    //     setPlaylists(response.data.data.playlists || []);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error fetching data:", error);
+    //   });
+
+    const fetchData = async () => {
+      try {
+        const data = await fetch(
+          `${searchAlbumURL}?query=${query}&limit=${limit}`
+        );
+        const response = await data.json();
+        setPlaylists(response.data.results);
+        console.log(response.data.results);
+      } catch (error) {
         console.error("Error fetching data:", error);
-      });
+      }
+    };
+    fetchData();
   }, []);
 
   // Function to handle scrolling left or right
@@ -93,8 +108,8 @@ const EnglishPlaylist = () => {
             <Grid item xs={1} sm={1} md={1}>
               <PlaylistCard
                 id={playlist.id}
-                image={playlist.image[2].link}
-                title={playlist.title}
+                image={playlist.image[2].url}
+                name={playlist.name}
               />
             </Grid>
           </Link>

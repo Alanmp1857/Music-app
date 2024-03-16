@@ -1,6 +1,6 @@
 import EnglishPlaylist from "./englishPlaylist/EnglishPlaylist";
 import HindiPlaylist from "./hindiPlaylist/HindiPlaylist";
-import TamilPlaylist from "./tamilPlaylist/TamilPlaylist";
+import MalayalamPlaylist from "./malayalamPlaylist/MalayalamPlaylist";
 import TeluguPlaylist from "./teluguPlaylist/TeluguPlaylist";
 const BrowseContainer = () => {
   return (
@@ -8,7 +8,7 @@ const BrowseContainer = () => {
       <EnglishPlaylist />
       <HindiPlaylist />
       <TeluguPlaylist />
-      <TamilPlaylist />
+      <MalayalamPlaylist />
     </div>
   );
 };

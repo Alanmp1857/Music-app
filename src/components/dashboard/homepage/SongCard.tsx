@@ -25,12 +25,12 @@ interface Artist {
 }
 
 interface Image {
-  link: string;
+  url: string;
 }
 
 interface downloadUrl {
   quality: string;
-  link: string;
+  url: string;
 }
 
 interface Song {
@@ -62,8 +62,8 @@ const SongCard: React.FC<SongCardProps> = ({ song }) => {
     user: email,
     songId: song.id,
     name: song.name,
-    image: song.image[2].link,
-    downloadUrl: song.downloadUrl[4].link,
+    image: song.image[2].url,
+    downloadUrl: song.downloadUrl[4].url,
   };
 
   useEffect(() => {
@@ -172,7 +172,7 @@ const SongCard: React.FC<SongCardProps> = ({ song }) => {
       <CardMedia
         component="img"
         sx={{ width: 200, height: "100%" }}
-        image={song.image[2].link}
+        image={song.image[2].url}
         alt={`Song cover for ${song.name}`}
       />
       <CardContent>
@@ -217,7 +217,7 @@ const SongCard: React.FC<SongCardProps> = ({ song }) => {
             src={
               song.downloadUrl.find(
                 (item: { quality: string }) => item.quality === "320kbps"
-              )?.link || ""
+              )?.url || ""
             }
             type="audio/mp4"
           />

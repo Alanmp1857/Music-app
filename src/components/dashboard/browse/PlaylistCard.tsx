@@ -5,10 +5,10 @@ import React from "react";
 interface BrowseCardProps {
   id: string;
   image: string;
-  title: string;
+  name: string;
 }
 
-const PlaylistCard: React.FC<BrowseCardProps> = ({ image, title }) => {
+const PlaylistCard: React.FC<BrowseCardProps> = ({ image, name }) => {
   return (
     <Card
       sx={{
@@ -22,12 +22,12 @@ const PlaylistCard: React.FC<BrowseCardProps> = ({ image, title }) => {
         component="img"
         sx={{ width: 200, height: "100%" }}
         image={image}
-        alt={`Song cover for ${title}`}
+        alt={`Song cover for ${name}`}
       />
       <CardContent>
-        {/* Display song/album name with ellipsis for long titles */}
-        <Typography gutterBottom variant="h5" component="div" title={title}>
-          {title.length > 10 ? `${title.substring(0, 10)}...` : title}
+        {/* Display song/album name with ellipsis for long names */}
+        <Typography gutterBottom variant="h5" component="div" title={name}>
+          {name.length > 10 ? `${name.substring(0, 10)}...` : name}
         </Typography>
       </CardContent>
     </Card>

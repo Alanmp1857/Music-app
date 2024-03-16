@@ -4,9 +4,8 @@ import Typography from "@mui/material/Typography";
 import React, { useEffect, useState, useRef } from "react";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
-import axios from "axios";
 import { useParams } from "react-router-dom";
-import { searchSongResultURL } from "../../../services/browseApi";
+import { songURL } from "../../../services/browseApi";
 
 const SearchSongResult = () => {
   const { id } = useParams();
@@ -22,28 +21,30 @@ const SearchSongResult = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(searchSongResultURL + `${id}`);
-        const data = response.data;
+        // const response = await axios.get(searchSongResultURL + `${id}`);
+        // const data = response.data;
 
-        if (data.status === "SUCCESS") {
-          const results = data.data;
+        const data = await fetch(`${songURL}/${id}`);
+        const response = await data.json();
+        // console.log(response.data);
 
-          const songsInfo: any[] = results.map((result: any) => ({
-            id: result.id,
-            name: result.name,
-            year: result.year,
-            duration: result.duration,
-            primaryArtists: result.primaryArtists,
-            language: result.language,
-            image: result.image[2].link,
-            downloadUrl: result.downloadUrl[4].link,
-            album: result.album.name,
-          }));
+        const results = response.data;
 
-          setSearchResults(songsInfo);
-        } else {
-          console.error("Error in API response:", data.message);
-        }
+        const songsInfo: any[] = results.map((result: any) => ({
+          id: result.id,
+          name: result.name,
+          year: result.year,
+          duration: result.duration,
+          primaryArtists: result.primaryArtists,
+          language: result.language,
+          image: result.image[2].url,
+          downloadUrl: result.downloadUrl[4].url,
+          album: result.album.name,
+        }));
+
+        console.log(songsInfo);
+
+        setSearchResults(songsInfo);
       } catch (error) {
         console.error("Error fetching data:", error);
       }

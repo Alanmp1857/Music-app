@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import Grid from "@mui/material/Grid";
 import SongCard from "./SongCard";
 import { popularPlaylistURL } from "../../../services/browseApi";
 
 // Define the default query string
-const defaultQuery = "61969868";
+// const defaultQuery = "61969868";
+const query = "One Direction";
+const limit = 20;
 
 const CardContainer = () => {
   // State to hold the fetched songs
@@ -13,15 +14,31 @@ const CardContainer = () => {
 
   useEffect(() => {
     // Fetch popular songs using axios when the component mounts
-    axios
-      .get(popularPlaylistURL + defaultQuery)
-      .then((response) => {
-        // Update state with fetched songs
-        setSongs(response.data.data.songs || []);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
+    // axios
+    //   .get(popularPlaylistURL + defaultQuery)
+    //   .then((response) => {
+    //     // Update state with fetched songs
+    //     setSongs(response.data.data.songs || []);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error fetching data:", error);
+    //   });
+
+    const fetchData = async () => {
+      try {
+        // const { data } = await axios.request(options);
+        const data = await fetch(
+          `https://saavn.dev/api/search/songs?query=${query}&limit=${limit}`
+        );
+        const response = await data.json();
+        setSongs(response.data.results);
+        // console.log(response.data.results);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (

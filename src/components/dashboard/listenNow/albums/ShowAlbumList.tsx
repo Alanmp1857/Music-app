@@ -8,7 +8,6 @@ import {
   IconButton,
   Typography,
 } from "@mui/material";
-import axios from "axios";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
 import { albumByIdURL } from "../../../../services/browseApi";
@@ -27,31 +26,41 @@ const ShowAlbumList = () => {
   // State to track whether a song is currently playing
   const [isPlaying, setIsPlaying] = useState(false);
 
+  // const query = "12411331";
+  const query = "Hq1sr6xu";
+
   // Fetch data when the component mounts or when the album ID changes
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(albumByIdURL + `${id}`);
-        const data = response.data;
+        // const response = await axios.get(albumByIdURL + `${id}`);
+        // const data = response.data;
+        const data = await fetch(
+          `https://saavn.dev/api/search/albums?query=${query}`
+        );
+        const response = await data.json();
+        console.log(response.data.results);
+        const results = response.data.results;
 
-        if (data.status === "SUCCESS") {
+        if (response.status === "SUCCESS") {
           // Extract relevant information from API response
-          const results = data.data.songs;
+          // const results = response.data;
+          // console.log(results);
           const songsInfo = results.map((result: any) => ({
             id: result.id,
             name: result.name,
-            year: result.year,
-            duration: result.duration,
-            primaryArtists: result.primaryArtists,
-            language: result.language,
-            image: result.image[2]?.link,
-            downloadUrl: result.downloadUrl[4]?.link,
+            // year: result.year,
+            // duration: result.duration,
+            // primaryArtists: result.primaryArtists,
+            // language: result.language,
+            image: result.image[2]?.url,
+            // downloadUrl: result.downloadUrl[4]?.url,
             album: result.album.name,
           }));
 
           setSearchResults(songsInfo);
         } else {
-          console.error("Error in API response:", data.message);
+          console.error("Error in API response:", response.message);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
