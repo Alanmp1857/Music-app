@@ -1,6 +1,5 @@
 import { Box, IconButton } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import TrendingListCard from "./TrendingListCard";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";

@@ -24,6 +24,7 @@ const ShowAlbumList = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   // State to track whether a song is currently playing
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isPlaying, setIsPlaying] = useState(false);
 
   // Fetch data when the component mounts or when the album ID changes

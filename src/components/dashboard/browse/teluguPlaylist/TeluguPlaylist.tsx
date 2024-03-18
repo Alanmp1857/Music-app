@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Box, Grid, IconButton } from "@mui/material";
-import axios from "axios";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Link } from "react-router-dom";
-import {
-  baseURL,
-  searchAlbumURL,
-  searchPlaylistURL,
-} from "../../../../services/browseApi";
+import { searchPlaylistURL } from "../../../../services/browseApi";
 import PlaylistCard from "../PlaylistCard";
 
 interface Image {

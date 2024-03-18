@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import SongCard from "./SongCard";
-import { homepageURL, popularPlaylistURL } from "../../../services/browseApi";
+import { homepageURL } from "../../../services/browseApi";
 
 // Define the default query string
-// const defaultQuery = "61969868";
-const query = "One Direction";
-const limit = 20;
 
 const CardContainer = () => {
   // State to hold the fetched songs
@@ -14,16 +11,6 @@ const CardContainer = () => {
 
   useEffect(() => {
     // Fetch popular songs using axios when the component mounts
-    // axios
-    //   .get(popularPlaylistURL + defaultQuery)
-    //   .then((response) => {
-    //     // Update state with fetched songs
-    //     setSongs(response.data.data.songs || []);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error fetching data:", error);
-    //   });
-
     const fetchData = async () => {
       try {
         // const { data } = await axios.request(options);

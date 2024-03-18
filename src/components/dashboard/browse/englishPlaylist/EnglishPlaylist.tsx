@@ -3,10 +3,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Box, Grid, IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
-import {
-  searchAlbumURL,
-  searchPlaylistURL,
-} from "../../../../services/browseApi";
+import { searchPlaylistURL } from "../../../../services/browseApi";
 import PlaylistCard from "../PlaylistCard";
 
 // Define the Playlist interface
@@ -22,7 +19,6 @@ interface PlayList {
 
 // Default query string
 const query = "english";
-const limit = 10;
 
 // Component for displaying trending English playlists
 const EnglishPlaylist = () => {

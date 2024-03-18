@@ -1,11 +1,9 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Box, Grid, IconButton } from "@mui/material";
 import AlbumListCard from "./AlbumListCard";
 import { Link } from "react-router-dom";
-import { albumURL, searchAlbumURL } from "../../../../services/browseApi";
 
 // Define the Image interface
 interface Image {
