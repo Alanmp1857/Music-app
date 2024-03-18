@@ -6,10 +6,10 @@ import TrendingListCard from "./TrendingListCard";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Link } from "react-router-dom";
-import { searchTrendingPlaylistURL } from "../../../../services/browseApi";
+import { searchPlaylistURL } from "../../../../services/browseApi";
 
 interface Image {
-  link: string;
+  url: string;
 }
 
 interface PlayList {
@@ -18,7 +18,7 @@ interface PlayList {
   image: Image[];
 }
 
-const query = "trending";
+const query = "popular";
 
 const TrendingList = () => {
   // State to store playlists
@@ -29,14 +29,18 @@ const TrendingList = () => {
 
   useEffect(() => {
     // Fetch data using axios when the component mounts
-    axios
-      .get(searchTrendingPlaylistURL + query)
-      .then((response) => {
-        setPlaylists(response.data.data.results || []);
-      })
-      .catch((error) => {
+
+    const fetchData = async () => {
+      try {
+        const data = await fetch(`${searchPlaylistURL}?query=${query}`);
+        const response = await data.json();
+        // console.log(response.data);
+        setPlaylists(response.data.results);
+      } catch (error) {
         console.error("Error fetching data:", error);
-      });
+      }
+    };
+    fetchData();
   }, []);
 
   // Handle horizontal scroll
@@ -95,7 +99,7 @@ const TrendingList = () => {
             <Grid item xs={1} sm={1} md={1}>
               <TrendingListCard
                 id={playlist.id}
-                image={playlist.image[2].link}
+                image={playlist.image[2].url}
                 name={playlist.name}
               />
             </Grid>

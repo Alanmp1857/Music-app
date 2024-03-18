@@ -26,7 +26,7 @@ const SearchSongResult = () => {
 
         const data = await fetch(`${songURL}/${id}`);
         const response = await data.json();
-        // console.log(response.data);
+        console.log(response.data);
 
         const results = response.data;
 
@@ -35,7 +35,7 @@ const SearchSongResult = () => {
           name: result.name,
           year: result.year,
           duration: result.duration,
-          primaryArtists: result.primaryArtists,
+          artists: result.artists,
           language: result.language,
           image: result.image[2].url,
           downloadUrl: result.downloadUrl[4].url,
@@ -94,13 +94,17 @@ const SearchSongResult = () => {
             </Typography>
             <Typography
               component="div"
-              variant="h5"
+              variant="h6"
               sx={{ marginLeft: "20px" }}>
-              Artist: {song.primaryArtists}
+              Artist:{" "}
+              {song.artists.all
+                .filter((artist: { role: string }) => artist.role === "singer")
+                .map((artist: { name: string }) => artist.name)
+                .join(", ")}
             </Typography>
             <Typography
               component="div"
-              variant="h5"
+              variant="h6"
               sx={{ marginLeft: "20px" }}>
               Album: {song.album}
             </Typography>

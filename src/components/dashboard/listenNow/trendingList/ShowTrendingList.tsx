@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
   Card,
@@ -11,8 +11,15 @@ import {
 } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
-import axios from "axios";
-import { popularPlaylistURL } from "../../../../services/browseApi";
+import { playlistURL } from "../../../../services/browseApi";
+
+interface Image {
+  url: string;
+}
+
+interface DownloadUrl {
+  url: string;
+}
 
 // Interface for the song data
 interface Song {
@@ -22,83 +29,63 @@ interface Song {
   duration: number;
   primaryArtists: string[];
   language: string;
-  image: string;
-  downloadUrl: string;
+  image: Image[];
+  downloadUrl: DownloadUrl[];
   album: string;
 }
 
 const ShowTrendingList: React.FC = () => {
   // Get the playlist ID from the route parameters
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams();
 
-  // State to store the search results
+  // State for storing search results
   const [searchResults, setSearchResults] = useState<Song[]>([]);
 
-  // State to manage the active audio element and playing status
-  const [activeAudio, setActiveAudio] = useState<HTMLAudioElement | null>(null);
-  const [isPlaying, setIsPlaying] = useState<{ [key: string]: boolean }>({});
+  // State to track the ID of the currently playing song
+  const [currentSongId, setCurrentSongId] = useState<string | null>(null);
 
-  // Function to handle play/pause button click
-  const handlePlayPause = (songId: string, downloadUrl: string) => {
-    if (activeAudio) {
-      // Pause if there's an active audio element
-      activeAudio.pause();
-      setActiveAudio(null);
-      setIsPlaying((prevIsPlaying) => ({
-        ...prevIsPlaying,
-        [songId]: false,
-      }));
-    } else {
-      // Create a new audio element and play the song
-      const audio = new Audio(downloadUrl);
-      audio.play().catch((error) => {
-        console.error("Error starting playback:", error);
-      });
+  // Reference for the audio element
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
-      // Set up a callback for when the song ends
-      audio.onended = () => {
-        setIsPlaying((prevIsPlaying) => ({
-          ...prevIsPlaying,
-          [songId]: false,
-        }));
-      };
-
-      // Set the new audio element as active
-      setActiveAudio(audio);
-      setIsPlaying((prevIsPlaying) => ({
-        ...prevIsPlaying,
-        [songId]: true,
-      }));
+  // Function to play a song
+  const playSong = (songId: string) => {
+    const song = searchResults.find((song) => song.id === songId);
+    if (song && audioRef.current) {
+      const downloadUrl = song.downloadUrl[4]?.url || ""; // Access the url property
+      audioRef.current.src = downloadUrl;
+      audioRef.current.play();
+      setCurrentSongId(songId);
     }
   };
 
-  // Fetch data when the component mounts or when the playlist ID changes
+  // Function to pause the currently playing song
+  const pauseSong = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      setCurrentSongId(null);
+    }
+  };
+
+  // Function to handle play/pause button click
+  const handlePlayPause = (songId: string) => {
+    if (currentSongId === songId) {
+      if (audioRef.current?.paused) {
+        playSong(songId);
+      } else {
+        pauseSong();
+      }
+    } else {
+      playSong(songId);
+    }
+  };
+
+  // Fetch data when the component mounts or when the album ID changes
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(popularPlaylistURL + `${id}`);
-        const data = response.data;
-
-        if (data.status === "SUCCESS") {
-          // Extract relevant information from API response
-          const results = data.data.songs;
-          const songsInfo = results.map((result: any) => ({
-            id: result.id,
-            name: result.name,
-            year: result.year,
-            duration: result.duration,
-            primaryArtists: result.primaryArtists,
-            language: result.language,
-            image: result.image[2].link,
-            downloadUrl: result.downloadUrl[4].link,
-            album: result.album.name,
-          }));
-
-          // Update the state with the songs information
-          setSearchResults(songsInfo);
-        } else {
-          console.error("Error in API response:", data.message);
-        }
+        const data = await fetch(`${playlistURL}?id=${id}`);
+        const response = await data.json();
+        setSearchResults(response.data.songs);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -107,15 +94,6 @@ const ShowTrendingList: React.FC = () => {
     fetchData();
   }, [id]);
 
-  // Reset audio and playing status when search results change
-  useEffect(() => {
-    if (activeAudio) {
-      activeAudio.pause();
-      setActiveAudio(null);
-      setIsPlaying({});
-    }
-  }, [searchResults, activeAudio]);
-
   return (
     <div style={{ marginLeft: "300px", marginTop: "100px" }}>
       <h1>Song List</h1>
@@ -123,7 +101,7 @@ const ShowTrendingList: React.FC = () => {
         container
         spacing={{ xs: 2, sm: 2, md: 2 }}
         columns={{ xs: 4, sm: 3, md: 5 }}>
-        {searchResults.map((song, index) => (
+        {searchResults.map((song) => (
           <Grid item xs={1} sm={1} md={1} key={song.id}>
             <Card
               sx={{
@@ -136,7 +114,7 @@ const ShowTrendingList: React.FC = () => {
               <CardMedia
                 component="img"
                 sx={{ width: 200, height: "100%" }}
-                image={song.image}
+                image={song.image[2].url}
                 alt={`Song cover for ${song.name}`}
               />
               <CardContent>
@@ -155,20 +133,25 @@ const ShowTrendingList: React.FC = () => {
 
               <CardActions
                 sx={{
-                  marginTop: "-30px",
+                  marginTop: "-40px",
                   display: "flex",
                   justifyContent: "center",
                 }}>
-                {/* Play/Pause button */}
+                {/* Play controls */}
                 <IconButton
                   aria-label="play/pause"
-                  onClick={() => handlePlayPause(song.id, song.downloadUrl)}>
-                  {isPlaying[song.id] ? (
+                  onClick={() => handlePlayPause(song.id)}>
+                  {currentSongId === song.id && !audioRef.current?.paused ? (
                     <PauseIcon sx={{ height: 38, width: 38 }} />
                   ) : (
                     <PlayArrowIcon sx={{ height: 38, width: 38 }} />
                   )}
                 </IconButton>
+
+                {/* Audio element */}
+                <audio ref={audioRef}>
+                  <source src={song.downloadUrl[4].url} type="audio/mp4" />
+                </audio>
               </CardActions>
             </Card>
           </Grid>

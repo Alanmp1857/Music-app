@@ -4,7 +4,11 @@ import axios from "axios";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Link } from "react-router-dom";
-import { baseURL, searchAlbumURL } from "../../../../services/browseApi";
+import {
+  baseURL,
+  searchAlbumURL,
+  searchPlaylistURL,
+} from "../../../../services/browseApi";
 import PlaylistCard from "../PlaylistCard";
 
 interface Image {
@@ -20,7 +24,6 @@ interface PlayList {
 
 // Default query string
 const query = "hindi";
-const limit = 10;
 
 // Component for displaying trending Hindi playlists
 const HindiPlaylist = () => {
@@ -29,24 +32,12 @@ const HindiPlaylist = () => {
   const [scrollLeft, setScrollLeft] = useState(0);
 
   useEffect(() => {
-    // Fetch data using axios when the component mounts
-    // axios
-    //   .get(baseURL + query)
-    //   .then((response) => {
-    //     setPlaylists(response.data.data.playlists || []);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error fetching data:", error);
-    //   });
-
     const fetchData = async () => {
       try {
-        const data = await fetch(
-          `${searchAlbumURL}?query=${query}&limit=${limit}`
-        );
+        const data = await fetch(`${searchPlaylistURL}?query=${query}`);
         const response = await data.json();
         setPlaylists(response.data.results);
-        console.log(response.data.results);
+        // console.log(response.data.results);
       } catch (error) {
         console.error("Error fetching data:", error);
       }

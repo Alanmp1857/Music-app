@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
-import { albumByIdURL } from "../../../../services/browseApi";
+import { albumURL } from "../../../../services/browseApi";
 import { useParams } from "react-router";
 
 const ShowAlbumList = () => {
@@ -21,47 +21,23 @@ const ShowAlbumList = () => {
   const [searchResults, setSearchResults] = useState<any[]>([]);
 
   // Reference for the audio element
-  const audioRef = useRef<HTMLAudioElement | null>(new Audio());
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   // State to track whether a song is currently playing
   const [isPlaying, setIsPlaying] = useState(false);
-
-  // const query = "12411331";
-  const query = "Hq1sr6xu";
 
   // Fetch data when the component mounts or when the album ID changes
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // const response = await axios.get(albumByIdURL + `${id}`);
-        // const data = response.data;
-        const data = await fetch(
-          `https://saavn.dev/api/search/albums?query=${query}`
-        );
+        const data = await fetch(`${albumURL}?id=${id}`);
         const response = await data.json();
-        console.log(response.data.results);
-        const results = response.data.results;
+        console.log(response);
+        const results = response.data.songs;
+        // Extract relevant information from API response
+        console.log(results);
 
-        if (response.status === "SUCCESS") {
-          // Extract relevant information from API response
-          // const results = response.data;
-          // console.log(results);
-          const songsInfo = results.map((result: any) => ({
-            id: result.id,
-            name: result.name,
-            // year: result.year,
-            // duration: result.duration,
-            // primaryArtists: result.primaryArtists,
-            // language: result.language,
-            image: result.image[2]?.url,
-            // downloadUrl: result.downloadUrl[4]?.url,
-            album: result.album.name,
-          }));
-
-          setSearchResults(songsInfo);
-        } else {
-          console.error("Error in API response:", response.message);
-        }
+        setSearchResults(results);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -71,22 +47,46 @@ const ShowAlbumList = () => {
   }, [id]);
 
   // Function to handle play/pause button click
-  const handlePlayPause = (downloadUrl: string) => {
-    const audio = audioRef.current;
+  const handlePlayPause = () => {
+    if (audioRef.current) {
+      if (audioRef.current.paused) {
+        // Play the audio
+        const playPromise = audioRef.current.play();
 
-    if (audio) {
-      if (audio.src === downloadUrl) {
-        // Pause if the same song is playing
-        audio.pause();
-        setIsPlaying(false);
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              // Playback started successfully
+              setIsPlaying(true);
+            })
+            .catch((error) => {
+              console.error("Error starting playback:", error);
+            });
+        }
       } else {
-        // Change the song if a different one is playing
-        audio.src = downloadUrl;
-        audio.play();
-        setIsPlaying(true);
+        // Pause the audio
+        audioRef.current.pause();
+        setIsPlaying(false);
       }
     }
   };
+
+  // Add event listener to update play/pause icon when audio starts playing
+  useEffect(() => {
+    if (audioRef.current) {
+      const handlePlaying = () => {
+        setIsPlaying(true);
+      };
+
+      audioRef.current.addEventListener("playing", handlePlaying);
+
+      return () => {
+        // Clean up the event listener when the component unmounts
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        audioRef.current?.removeEventListener("playing", handlePlaying);
+      };
+    }
+  }, []);
 
   return (
     <div style={{ marginLeft: "300px", marginTop: "100px" }}>
@@ -108,7 +108,7 @@ const ShowAlbumList = () => {
               <CardMedia
                 component="img"
                 sx={{ width: 200, height: "100%" }}
-                image={song.image}
+                image={song.image[2].url}
                 alt={`Song cover for ${song.name}`}
               />
               <CardContent>
@@ -127,15 +127,14 @@ const ShowAlbumList = () => {
 
               <CardActions
                 sx={{
-                  marginTop: "-30px",
+                  marginTop: "-40px",
                   display: "flex",
                   justifyContent: "center",
                 }}>
-                {/* Play/Pause button */}
-                <IconButton
-                  aria-label="play/pause"
-                  onClick={() => handlePlayPause(song.downloadUrl)}>
-                  {isPlaying ? (
+                {/* Play controls */}
+                <IconButton aria-label="play/pause" onClick={handlePlayPause}>
+                  {/* <PlayArrowIcon sx={{ height: 38, width: 38 }} /> */}
+                  {audioRef.current && !audioRef.current.paused ? (
                     <PauseIcon sx={{ height: 38, width: 38 }} />
                   ) : (
                     <PlayArrowIcon sx={{ height: 38, width: 38 }} />
@@ -144,7 +143,7 @@ const ShowAlbumList = () => {
 
                 {/* Audio element */}
                 <audio ref={audioRef}>
-                  <source src={song.downloadUrl} type="audio/mp4" />
+                  <source src={song.downloadUrl[4].url} type="audio/mp4" />
                 </audio>
               </CardActions>
             </Card>

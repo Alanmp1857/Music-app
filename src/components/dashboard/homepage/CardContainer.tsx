@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import SongCard from "./SongCard";
-import { popularPlaylistURL } from "../../../services/browseApi";
+import { homepageURL, popularPlaylistURL } from "../../../services/browseApi";
 
 // Define the default query string
 // const defaultQuery = "61969868";
@@ -27,12 +27,10 @@ const CardContainer = () => {
     const fetchData = async () => {
       try {
         // const { data } = await axios.request(options);
-        const data = await fetch(
-          `https://saavn.dev/api/search/songs?query=${query}&limit=${limit}`
-        );
+        const data = await fetch(`${homepageURL}`);
         const response = await data.json();
-        setSongs(response.data.results);
-        // console.log(response.data.results);
+        // console.log(response.data.songs);
+        setSongs(response.data.songs);
       } catch (error) {
         console.error(error);
       }
@@ -43,7 +41,7 @@ const CardContainer = () => {
 
   return (
     <div style={{ margin: "0px 10px 20px 50px" }}>
-      <h1>Popular Songs</h1>
+      <h1>Trending Songs</h1>
       {/* Responsive grid for displaying song cards */}
       <Grid
         container

@@ -1,10 +1,12 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Box, Grid, IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
-import { baseURL, searchAlbumURL } from "../../../../services/browseApi";
+import {
+  searchAlbumURL,
+  searchPlaylistURL,
+} from "../../../../services/browseApi";
 import PlaylistCard from "../PlaylistCard";
 
 // Define the Playlist interface
@@ -30,23 +32,12 @@ const EnglishPlaylist = () => {
 
   // Fetch playlists data from the server when the component mounts
   useEffect(() => {
-    // axios
-    //   .get(baseURL + query)
-    //   .then((response) => {
-    //     setPlaylists(response.data.data.playlists || []);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error fetching data:", error);
-    //   });
-
     const fetchData = async () => {
       try {
-        const data = await fetch(
-          `${searchAlbumURL}?query=${query}&limit=${limit}`
-        );
+        const data = await fetch(`${searchPlaylistURL}?query=${query}`);
         const response = await data.json();
         setPlaylists(response.data.results);
-        console.log(response.data.results);
+        // console.log(response.data.results);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
