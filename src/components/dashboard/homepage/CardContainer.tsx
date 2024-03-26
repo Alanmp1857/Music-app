@@ -28,7 +28,7 @@ const CardContainer = () => {
 
   return (
     <div style={{ margin: "0px 10px 20px 50px" }}>
-      <h1>Trending Songs</h1>
+      <h1 style={{ color: "white" }}>Trending Songs</h1>
       {/* Responsive grid for displaying song cards */}
       <Grid
         container

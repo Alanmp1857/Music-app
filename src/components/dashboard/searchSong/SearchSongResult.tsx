@@ -77,9 +77,10 @@ const SearchSongResult = () => {
           style={{
             display: "flex",
             margin: "10px",
-            backgroundColor: "darkgray",
+            backgroundColor: "#3a4856",
             width: "80%",
             borderRadius: "10px",
+            color: "white",
           }}>
           {/* Song details */}
           <div style={{ display: "flex", justifyContent: "center" }}>

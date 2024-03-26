@@ -69,14 +69,14 @@ const TrendingList = () => {
 
   return (
     <div style={{ margin: "100px 20px 20px 300px" }}>
-      <h1>Popular Playlists</h1>
+      <h1 style={{ color: "white" }}>Popular Playlists</h1>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         {/* Scroll buttons */}
         <IconButton onClick={() => handleScroll("left")}>
-          <ArrowBackIcon />
+          <ArrowBackIcon sx={{ color: "white" }} />
         </IconButton>
         <IconButton onClick={() => handleScroll("right")}>
-          <ArrowForwardIcon />
+          <ArrowForwardIcon sx={{ color: "white" }} />
         </IconButton>
       </div>
 

@@ -27,7 +27,13 @@ const SearchSongCard: React.FC<ListenNowCardProps> = ({
     <div onClick={onClick}>
       {/*  */}
 
-      <Card sx={{ width: "200px", margin: "10px 10px 10px 10px" }}>
+      <Card
+        sx={{
+          width: "200px",
+          margin: "10px 10px 10px 10px",
+          backgroundColor: "#19272e",
+          color: "white",
+        }}>
         {/* song image */}
         <CardMedia
           component="img"

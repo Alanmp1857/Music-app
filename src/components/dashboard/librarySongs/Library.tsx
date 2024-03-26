@@ -49,7 +49,7 @@ const Library = () => {
 
   return (
     <div style={{ margin: "100px 10px 20px 300px" }}>
-      <h1>Favourite Songs</h1>
+      <h1 style={{ color: "white" }}>Favourite Songs</h1>
       <Grid
         container
         spacing={{ xs: 2, sm: 2, md: 2 }}
@@ -60,8 +60,8 @@ const Library = () => {
               sx={{
                 maxWidth: 200,
                 margin: "10px",
-                background:
-                  "linear-gradient(to top, #f0f0f0, #d3d3d3, #808080, #4d4d4d, #000000)",
+                backgroundColor: "#19272e",
+                color: "white",
               }}>
               <CardMedia
                 component="img"
@@ -92,9 +92,11 @@ const Library = () => {
                   aria-label="play/pause"
                   onClick={() => handlePlayPause(song.downloadUrl, song.id)}>
                   {isPlayingMap[song.id] ? (
-                    <PauseIcon sx={{ height: 38, width: 38 }} />
+                    <PauseIcon sx={{ height: 38, width: 38, color: "gray" }} />
                   ) : (
-                    <PlayArrowIcon sx={{ height: 38, width: 38 }} />
+                    <PlayArrowIcon
+                      sx={{ height: 38, width: 38, color: "gray" }}
+                    />
                   )}
                 </IconButton>
 

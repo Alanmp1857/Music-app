@@ -96,7 +96,7 @@ const ShowTrendingList: React.FC = () => {
 
   return (
     <div style={{ marginLeft: "300px", marginTop: "100px" }}>
-      <h1>Song List</h1>
+      <h1 style={{ color: "white" }}>Song List</h1>
       <Grid
         container
         spacing={{ xs: 2, sm: 2, md: 2 }}
@@ -107,8 +107,8 @@ const ShowTrendingList: React.FC = () => {
               sx={{
                 maxWidth: 200,
                 margin: "10px",
-                background:
-                  "linear-gradient(to top, #f0f0f0, #d3d3d3, #808080, #4d4d4d, #000000)",
+                backgroundColor: "#19272e",
+                color: "white",
               }}>
               {/* Song image */}
               <CardMedia
@@ -142,9 +142,11 @@ const ShowTrendingList: React.FC = () => {
                   aria-label="play/pause"
                   onClick={() => handlePlayPause(song.id)}>
                   {currentSongId === song.id && !audioRef.current?.paused ? (
-                    <PauseIcon sx={{ height: 38, width: 38 }} />
+                    <PauseIcon sx={{ height: 38, width: 38, color: "gray" }} />
                   ) : (
-                    <PlayArrowIcon sx={{ height: 38, width: 38 }} />
+                    <PlayArrowIcon
+                      sx={{ height: 38, width: 38, color: "gray" }}
+                    />
                   )}
                 </IconButton>
 

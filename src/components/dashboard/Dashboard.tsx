@@ -10,6 +10,7 @@ const Dashboard = () => {
         p: 3,
         mt: 5,
         ml: 24,
+        backgroundColor: "#121c21",
       }}>
       <CardContainer />
     </Box>

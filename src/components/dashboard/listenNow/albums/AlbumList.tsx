@@ -71,17 +71,21 @@ const AlbumList = () => {
   return (
     <div style={{ margin: "40px 20px 20px 300px" }}>
       {/* Section Title */}
-      <h1>Trending Albums</h1>
+      <h1 style={{ color: "white" }}>Trending Albums</h1>
 
       {/* Scroll buttons */}
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+        }}>
         {/* Scroll left button */}
         <IconButton onClick={() => handleScroll("left")}>
-          <ArrowBackIcon />
+          <ArrowBackIcon sx={{ color: "white" }} />
         </IconButton>
         {/* Scroll right button */}
         <IconButton onClick={() => handleScroll("right")}>
-          <ArrowForwardIcon />
+          <ArrowForwardIcon sx={{ color: "white" }} />
         </IconButton>
       </div>
       {/* End of Scroll buttons */}

@@ -165,8 +165,7 @@ const SongCard: React.FC<SongCardProps> = ({ song }) => {
     <Card
       sx={{
         maxWidth: 200,
-        background:
-          "linear-gradient(to top, #f0f0f0, #d3d3d3, #808080, #4d4d4d, #000000)",
+        backgroundColor: "#19272e",
       }}>
       {/* song image */}
       <CardMedia
@@ -177,7 +176,12 @@ const SongCard: React.FC<SongCardProps> = ({ song }) => {
       />
       <CardContent>
         {/* song/album name */}
-        <Typography gutterBottom variant="h5" component="div" title={song.name}>
+        <Typography
+          gutterBottom
+          variant="h5"
+          component="div"
+          title={song.name}
+          sx={{ color: "white" }}>
           {song.name.length > 10
             ? `${song.name.substring(0, 10)}...`
             : song.name}
@@ -192,11 +196,10 @@ const SongCard: React.FC<SongCardProps> = ({ song }) => {
         }}>
         {/* Play controls */}
         <IconButton aria-label="play/pause" onClick={handlePlayPause}>
-          {/* <PlayArrowIcon sx={{ height: 38, width: 38 }} /> */}
           {audioRef.current && !audioRef.current.paused ? (
-            <PauseIcon sx={{ height: 38, width: 38 }} />
+            <PauseIcon sx={{ height: 38, width: 38, color: "gray" }} />
           ) : (
-            <PlayArrowIcon sx={{ height: 38, width: 38 }} />
+            <PlayArrowIcon sx={{ height: 38, width: 38, color: "gray" }} />
           )}
         </IconButton>
         {/* favourite button */}

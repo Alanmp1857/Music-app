@@ -68,14 +68,14 @@ const TeluguPlaylist = () => {
 
   return (
     <div style={{ margin: "40px 20px 20px 30px" }}>
-      <h1>Trending Playlists - Telugu</h1>
+      <h1 style={{ color: "white" }}>Trending Playlists - Telugu</h1>
       {/* Navigation buttons for scrolling */}
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <IconButton onClick={() => handleScroll("left")}>
-          <ArrowBackIcon />
+          <ArrowBackIcon sx={{ color: "white" }} />
         </IconButton>
         <IconButton onClick={() => handleScroll("right")}>
-          <ArrowForwardIcon />
+          <ArrowForwardIcon sx={{ color: "white" }} />
         </IconButton>
       </div>
       {/* Container for playlist cards with scroll functionality */}

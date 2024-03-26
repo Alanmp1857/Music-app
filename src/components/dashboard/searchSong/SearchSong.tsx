@@ -64,7 +64,7 @@ const SearchSong: React.FC<SearchSongProps> = ({ query }) => {
             {/* Add style prop to the Link component to remove underline */}
             <Link
               to={`/search/${result.id}`}
-              style={{ textDecoration: "underline", color: "white" }}
+              style={{ textDecoration: "underline", color: "#19272e" }}
               key={result.id}>
               <SearchSongCard
                 key={result.id}

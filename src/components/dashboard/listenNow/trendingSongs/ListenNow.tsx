@@ -80,19 +80,19 @@ const ListenNow: React.FC = () => {
   return (
     <div style={{ margin: "40px 20px 20px 300px" }}>
       {/* Section Title */}
-      <h1>Popular Songs</h1>
+      <h1 style={{ color: "white" }}>Popular Songs</h1>
 
       {/* Scroll Buttons */}
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <IconButton
           aria-label="Scroll left"
           onClick={() => handleScroll("left")}>
-          <ArrowBackIcon />
+          <ArrowBackIcon sx={{ color: "white" }} />
         </IconButton>
         <IconButton
           aria-label="Scroll right"
           onClick={() => handleScroll("right")}>
-          <ArrowForwardIcon />
+          <ArrowForwardIcon sx={{ color: "white" }} />
         </IconButton>
       </div>
 

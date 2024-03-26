@@ -13,7 +13,7 @@ import "./App.css";
 
 function App() {
   return (
-    <div>
+    <div style={{ backgroundColor: "#121c21" }}>
       <BrowserRouter>
         <HomePage />
         <Routes>

@@ -51,8 +51,8 @@ const ListenNowCard: React.FC<ListenNowCardProps> = ({
       sx={{
         maxWidth: 200,
         margin: "10px",
-        background:
-          "linear-gradient(to top, #f0f0f0, #d3d3d3, #808080, #4d4d4d, #000000)",
+        backgroundColor: "#19272e",
+        color: "white",
       }}>
       {/* Song image */}
       <CardMedia
@@ -93,10 +93,11 @@ const ListenNowCard: React.FC<ListenNowCardProps> = ({
               sx={{
                 height: 38,
                 width: 38,
+                color: "gray",
               }}
             />
           ) : (
-            <PauseIcon sx={{ height: 38, width: 38 }} />
+            <PauseIcon sx={{ height: 38, width: 38, color: "gray" }} />
           )}
         </IconButton>
 

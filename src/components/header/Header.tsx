@@ -126,7 +126,7 @@ const Header = () => {
   return (
     <div style={{ zIndex: 1300, position: "fixed", width: "100vw" }}>
       {/* Main AppBar */}
-      <AppBar position="fixed" sx={{ backgroundColor: "#474747" }}>
+      <AppBar position="fixed" sx={{ backgroundColor: "#19272e" }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             {/* Logo for larger screens */}
@@ -165,6 +165,7 @@ const Header = () => {
                 color="inherit">
                 <MoreVertIcon />
               </IconButton>
+
               {/* Sidebar menu for mobile */}
               <Menu
                 id="menu-appbar"
@@ -298,7 +299,7 @@ const Header = () => {
             margin: "60px 0px 0px 190px",
             width: "60%",
             position: "fixed",
-            backgroundColor: "lightgrey",
+            backgroundColor: "#3a4856",
             borderRadius: "10px",
           }}>
           {searchQuery && (

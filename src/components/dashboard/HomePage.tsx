@@ -52,7 +52,7 @@ const HomePage = () => {
           [`& .MuiDrawer-paper`]: {
             width: drawerWidth,
             boxSizing: "border-box",
-            backgroundColor: "gray",
+            backgroundColor: "#19272e",
           },
         }}>
         <Toolbar />

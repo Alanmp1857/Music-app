@@ -14,8 +14,8 @@ const PlaylistCard: React.FC<BrowseCardProps> = ({ image, name }) => {
       sx={{
         maxWidth: 200,
         margin: "10px",
-        background:
-          "linear-gradient(to top, #f0f0f0, #d3d3d3, #808080, #4d4d4d, #000000)",
+        backgroundColor: "#19272e",
+        color: "white",
       }}>
       {/* Display song image */}
       <CardMedia
