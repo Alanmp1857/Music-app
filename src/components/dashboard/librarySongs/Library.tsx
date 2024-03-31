@@ -48,7 +48,7 @@ const Library = () => {
   };
 
   return (
-    <div style={{ margin: "100px 10px 20px 300px" }}>
+    <div style={{ margin: "100px 10px 20px 100px" }}>
       <h1 style={{ color: "white" }}>Favourite Songs</h1>
       <Grid
         container
