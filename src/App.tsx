@@ -2,7 +2,6 @@ import Dashboard from "./components/dashboard/Dashboard";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Premium from "./components/premium/Premium";
 import BrowseContainer from "./components/dashboard/browse/BrowseContainer";
-import HomePage from "./components/dashboard/HomePage";
 import SearchSongResult from "./components/dashboard/searchSong/SearchSongResult";
 import ListenContainer from "./components/dashboard/listenNow/ListenContainer";
 import ShowTrendingList from "./components/dashboard/listenNow/trendingList/ShowTrendingList";

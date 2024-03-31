@@ -1,9 +1,7 @@
-import { Box, useTheme } from "@mui/material";
+import { Box } from "@mui/material";
 import CardContainer from "./homepage/CardContainer";
 
 const Dashboard = () => {
-  const theme = useTheme();
-
   return (
     <Box
       component="main"
