@@ -10,12 +10,13 @@ import ShowAlbumList from "./components/dashboard/listenNow/albums/ShowAlbumList
 import ShowPlaylistEnglish from "./components/dashboard/browse/englishPlaylist/ShowPlaylistEnglish";
 import Library from "./components/dashboard/librarySongs/Library";
 import "./App.css";
+import HeaderV2 from "./components/header/HeaderV2";
 
 function App() {
   return (
     <div style={{ backgroundColor: "#121c21" }}>
       <BrowserRouter>
-        <HomePage />
+        <HeaderV2 />
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/premium" element={<Premium />} />

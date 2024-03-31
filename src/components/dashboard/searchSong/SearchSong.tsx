@@ -57,7 +57,7 @@ const SearchSong: React.FC<SearchSongProps> = ({ query }) => {
       <Grid
         container
         spacing={{ xs: 2, sm: 2, md: 3 }}
-        columns={{ xs: 1, sm: 2, md: 4 }}>
+        columns={{ xs: 1, sm: 2, md: 3, lg: 4 }}>
         {/* Map through searchResults to render SearchSongCard components */}
         {searchResults.map((result) => (
           <Grid item xs={1} sm={1} md={1} key={result.id}>

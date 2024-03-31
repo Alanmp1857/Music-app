@@ -90,12 +90,12 @@ const ShowAlbumList = () => {
   }, []);
 
   return (
-    <div style={{ marginLeft: "300px", marginTop: "100px" }}>
+    <div style={{ marginLeft: "120px", marginTop: "100px" }}>
       <h1 style={{ color: "white" }}>Song List</h1>
       <Grid
         container
         spacing={{ xs: 2, sm: 2, md: 2 }}
-        columns={{ xs: 4, sm: 3, md: 5 }}>
+        columns={{ xs: 1, sm: 2, md: 3, lg: 5 }}>
         {searchResults.map((song) => (
           <Grid item xs={1} sm={1} md={1} key={song.id}>
             <Card

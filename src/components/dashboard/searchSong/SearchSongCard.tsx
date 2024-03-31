@@ -43,7 +43,7 @@ const SearchSongCard: React.FC<ListenNowCardProps> = ({
         />
         <CardContent>
           {/* song/album name */}
-          <Typography gutterBottom variant="h5" component="div" title={name}>
+          <Typography gutterBottom variant="h6" component="div" title={name}>
             {name.length > 10 ? name.substring(0, 10) + "..." : name}
           </Typography>
         </CardContent>

@@ -69,7 +69,7 @@ const AlbumList = () => {
   };
 
   return (
-    <div style={{ margin: "40px 20px 20px 300px" }}>
+    <div style={{ margin: "40px 20px 20px 150px" }}>
       {/* Section Title */}
       <h1 style={{ color: "white" }}>Trending Albums</h1>
 

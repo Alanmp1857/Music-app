@@ -68,7 +68,7 @@ const TrendingList = () => {
   };
 
   return (
-    <div style={{ margin: "100px 20px 20px 300px" }}>
+    <div style={{ margin: "100px 20px 20px 150px" }}>
       <h1 style={{ color: "white" }}>Popular Playlists</h1>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         {/* Scroll buttons */}

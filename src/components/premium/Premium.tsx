@@ -28,6 +28,7 @@ const Premium = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          color: "white",
         }}>
         <div>
           <h3>The Power of Premium</h3>
@@ -191,7 +192,7 @@ const Premium = () => {
       <div style={{ display: "flex", justifyContent: "space-around" }}>
         {/* Card: Music Free */}
         <Box width={250} margin={5}>
-          <Card sx={{ backgroundColor: "#474747", borderRadius: 3 }}>
+          <Card sx={{ backgroundColor: "#19272e", borderRadius: 3 }}>
             <CardContent
               sx={{
                 color: "white",
@@ -239,7 +240,7 @@ const Premium = () => {
                   backgroundColor: "white",
                   color: "black",
                   width: "100%",
-                  "&:hover": { backgroundColor: "#626262", color: "white" },
+                  "&:hover": { backgroundColor: "#3a4856", color: "white" },
                 }}>
                 Free
               </Button>
@@ -249,7 +250,7 @@ const Premium = () => {
 
         {/* Card: Starter Pack */}
         <Box width={250} margin={5}>
-          <Card sx={{ backgroundColor: "#474747", borderRadius: 3 }}>
+          <Card sx={{ backgroundColor: "#19272e", borderRadius: 3 }}>
             <CardContent
               sx={{
                 color: "white",
@@ -297,7 +298,7 @@ const Premium = () => {
                   backgroundColor: "white",
                   color: "black",
                   width: "100%",
-                  "&:hover": { backgroundColor: "#626262", color: "white" },
+                  "&:hover": { backgroundColor: "#3a4856", color: "white" },
                 }}>
                 ₹ 100 (30 days)
               </Button>
@@ -307,7 +308,7 @@ const Premium = () => {
 
         {/* Card: Premium */}
         <Box width={250} margin={5}>
-          <Card sx={{ backgroundColor: "#474747", borderRadius: 3 }}>
+          <Card sx={{ backgroundColor: "#19272e", borderRadius: 3 }}>
             <CardContent
               sx={{
                 color: "white",
@@ -355,7 +356,7 @@ const Premium = () => {
                   backgroundColor: "white",
                   color: "black",
                   width: "100%",
-                  "&:hover": { backgroundColor: "#626262", color: "white" },
+                  "&:hover": { backgroundColor: "#3a4856", color: "white" },
                 }}>
                 ₹ 599 (365 days)
               </Button>

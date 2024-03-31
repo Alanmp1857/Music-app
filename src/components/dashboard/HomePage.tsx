@@ -10,12 +10,12 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import Header from "../header/Header";
 import { Link } from "react-router-dom";
 import PlayCircleRoundedIcon from "@mui/icons-material/PlayCircleRounded";
 import ManageSearchRoundedIcon from "@mui/icons-material/ManageSearchRounded";
 import RadioRoundedIcon from "@mui/icons-material/RadioRounded";
 import { useAuth0 } from "@auth0/auth0-react";
+import HeaderV2 from "../header/HeaderV2";
 
 const drawerWidth = 240;
 
@@ -40,7 +40,8 @@ const HomePage = () => {
         }}>
         <Toolbar>
           {/* Header component */}
-          <Header />
+          <HeaderV2 />
+          {/*  */}
         </Toolbar>
       </AppBar>
       {/* Drawer */}

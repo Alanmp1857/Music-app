@@ -4,7 +4,7 @@ import MalayalamPlaylist from "./malayalamPlaylist/MalayalamPlaylist";
 import TeluguPlaylist from "./teluguPlaylist/TeluguPlaylist";
 const BrowseContainer = () => {
   return (
-    <div style={{ marginLeft: "300px" }}>
+    <div style={{ marginLeft: "100px" }}>
       <EnglishPlaylist />
       <HindiPlaylist />
       <TeluguPlaylist />
