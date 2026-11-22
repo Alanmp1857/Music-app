@@ -5,7 +5,7 @@ import { Box } from "@mui/material";
 
 const ListenContainer = () => {
   return (
-    <Box component="div" sx={{ ml: -4, mr: 1 }}>
+    <Box component="div" className="content-page listen-page">
       <TrendingList />
       <ListenNow />
       <AlbumList />

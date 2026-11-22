@@ -16,29 +16,26 @@ import GlobalPlayer from "./components/musicPlayer/GlobalPlayer";
 
 function App() {
   return (
-    <div
-      style={{
-        backgroundColor: "#121c21",
-        paddingBottom: "100px",
-        minHeight: "100vh",
-      }}>
+    <div className="app-shell">
       <MusicPlayerProvider>
         <GlobalPlayer />
         <BrowserRouter>
           <HeaderV2 />
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/premium" element={<Premium />} />
-            <Route path="/browse" element={<BrowseContainer />} />
-            <Route path="/listen-now" element={<ListenContainer />} />
-            <Route path="/search/:id" element={<SearchSongResult />} />
-            <Route path="/search/:type/:id" element={<SearchSongResult />} />
-            <Route path="/artist/:artistName" element={<ArtistSongs />} />
-            <Route path="/trending/:id" element={<ShowTrendingList />} />
-            <Route path="/playlist/:id" element={<ShowPlaylist />} />
-            <Route path="/album/:id" element={<ShowAlbumList />} />
-            <Route path="/library" element={<Library />} />
-          </Routes>
+          <main className="app-main">
+            <Routes>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/premium" element={<Premium />} />
+              <Route path="/browse" element={<BrowseContainer />} />
+              <Route path="/listen-now" element={<ListenContainer />} />
+              <Route path="/search/:id" element={<SearchSongResult />} />
+              <Route path="/search/:type/:id" element={<SearchSongResult />} />
+              <Route path="/artist/:artistName" element={<ArtistSongs />} />
+              <Route path="/trending/:id" element={<ShowTrendingList />} />
+              <Route path="/playlist/:id" element={<ShowPlaylist />} />
+              <Route path="/album/:id" element={<ShowAlbumList />} />
+              <Route path="/library" element={<Library />} />
+            </Routes>
+          </main>
         </BrowserRouter>
       </MusicPlayerProvider>
     </div>

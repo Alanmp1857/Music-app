@@ -125,18 +125,20 @@ const SongCard: React.FC<SongCardProps> = ({ song }) => {
 
   return (
     <Card
+      className="song-card"
       sx={{
-        maxWidth: 200,
-        backgroundColor: "#19272e",
-        borderRadius: 2,
+        width: "100%",
+        maxWidth: "none",
+        backgroundColor: "#111a2b",
+        borderRadius: 4,
         transition: "all 0.3s ease",
         cursor: "pointer",
         position: "relative",
         overflow: "hidden",
         "&:hover": {
           transform: "translateY(-8px)",
-          boxShadow: "0 8px 24px rgba(0, 0, 0, 0.4)",
-          backgroundColor: "#1f2f37",
+          boxShadow: "0 18px 42px rgba(0, 0, 0, 0.38)",
+          backgroundColor: "#18243a",
           "& .MuiCardActions-root": {
             opacity: 1,
           },
@@ -149,8 +151,9 @@ const SongCard: React.FC<SongCardProps> = ({ song }) => {
       <CardMedia
         component="img"
         sx={{
-          width: 200,
-          height: 200,
+          width: "100%",
+          height: "auto",
+          aspectRatio: "1",
           objectFit: "cover",
           transition: "transform 0.3s ease",
           "&:hover": {

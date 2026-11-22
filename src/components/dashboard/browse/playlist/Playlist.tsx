@@ -21,7 +21,6 @@ interface PlaylistProps {
   language: string;
   query: string;
   containerId: string;
-  isFirst?: boolean;
 }
 
 // Generic component for displaying trending playlists by language
@@ -29,7 +28,6 @@ const Playlist: React.FC<PlaylistProps> = ({
   language,
   query,
   containerId,
-  isFirst = false,
 }) => {
   // State to hold playlists and scroll position
   const [playlists, setPlaylists] = useState<PlayList[]>([]);
@@ -75,11 +73,11 @@ const Playlist: React.FC<PlaylistProps> = ({
   };
 
   return (
-    <div
-      style={{
-        margin: isFirst ? "100px 20px 20px 30px" : "40px 20px 20px 30px",
-      }}>
-      <h1 style={{ color: "white" }}>Trending Playlists - {language}</h1>
+    <section className="music-section">
+      <header className="section-heading">
+        <p className="section-eyebrow">Explore by language</p>
+        <h2 className="section-title">Trending Playlists - {language}</h2>
+      </header>
       {/* Navigation buttons for scrolling */}
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <IconButton onClick={() => handleScroll("left")}>
@@ -114,7 +112,7 @@ const Playlist: React.FC<PlaylistProps> = ({
           </Link>
         ))}
       </Box>
-    </div>
+    </section>
   );
 };
 

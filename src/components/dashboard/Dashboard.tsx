@@ -3,23 +3,17 @@ import CardContainer from "./homepage/CardContainer";
 
 const Dashboard = () => {
   return (
-    <Box
-      component="main"
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        flexGrow: 1,
-        p: 3,
-        mt: 5,
-        ml: {
-          xs: 5, // Set ml to 2 on xs breakpoint
-          sm: 8, // Set ml to 2 on sm breakpoint
-          md: 14, // Default ml value for other breakpoints
-        },
-        mr: "auto",
-        backgroundColor: "#121c21",
-      }}>
+    <Box component="div" className="content-page dashboard-page">
+      <section className="welcome-panel">
+        <p className="welcome-eyebrow">A better kind of listening</p>
+        <h1 className="welcome-title">
+          Find your next <span>favorite.</span>
+        </h1>
+        <p className="welcome-copy">
+          Explore fresh picks, familiar sounds, and the music you’ll want to
+          come back to.
+        </p>
+      </section>
       <CardContainer />
     </Box>
   );

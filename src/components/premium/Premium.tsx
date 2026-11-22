@@ -15,13 +15,7 @@ import QueueMusicIcon from "@mui/icons-material/QueueMusic";
 // Premium component
 const Premium = () => {
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        width: "80%",
-        marginLeft: "250px",
-      }}>
+    <div className="content-page premium-page">
       {/* Section: The Power of Premium */}
       <div
         style={{

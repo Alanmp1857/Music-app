@@ -68,8 +68,11 @@ const TrendingList = () => {
   };
 
   return (
-    <div style={{ margin: "100px 20px 20px 150px" }}>
-      <h1 style={{ color: "white" }}>Popular Playlists</h1>
+    <section className="music-section">
+      <header className="section-heading">
+        <p className="section-eyebrow">Explore a mood</p>
+        <h2 className="section-title">Popular Playlists</h2>
+      </header>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         {/* Scroll buttons */}
         <IconButton onClick={() => handleScroll("left")}>
@@ -105,7 +108,7 @@ const TrendingList = () => {
           </Link>
         ))}
       </Box>
-    </div>
+    </section>
   );
 };
 

@@ -123,14 +123,17 @@ export default function GlobalPlayer() {
       elevation={8}
       sx={{
         position: "fixed",
-        bottom: 0,
-        left: 0,
-        right: 0,
-        backgroundColor: "#19272e",
+        left: { xs: 8, sm: 16 },
+        right: { xs: 8, sm: 16 },
+        bottom: { xs: 8, sm: 16 },
+        backgroundColor: "rgba(14, 22, 38, 0.88)",
+        backdropFilter: "blur(22px)",
         color: "white",
         zIndex: 1300,
-        borderTop: "1px solid rgba(255, 255, 255, 0.1)",
+        border: "1px solid rgba(162, 177, 205, 0.18)",
+        borderRadius: { xs: 3, sm: 4 },
         padding: { xs: "8px", sm: "12px 16px" },
+        boxShadow: "0 18px 48px rgba(0, 0, 0, 0.4)",
       }}>
       <Box
         sx={{

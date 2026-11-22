@@ -76,8 +76,11 @@ const ShowTrendingList: React.FC = () => {
   }, [id]);
 
   return (
-    <div style={{ marginLeft: "100px", marginTop: "100px" }}>
-      <h1 style={{ color: "white" }}>Song List</h1>
+    <div className="content-page detail-page">
+      <header className="section-heading">
+        <p className="section-eyebrow">Your playlist</p>
+        <h1>Song List</h1>
+      </header>
       <Grid
         container
         spacing={{ xs: 2, sm: 2, md: 2 }}

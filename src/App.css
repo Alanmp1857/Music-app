@@ -1,38 +1,256 @@
-.App {
-  text-align: center;
+.app-shell {
+  min-height: 100vh;
+  color: #f5f7fb;
 }
 
-.App-logo {
-  height: 40vmin;
+.app-main {
+  box-sizing: border-box;
+  min-height: 100vh;
+  padding: 104px clamp(20px, 4vw, 56px) 132px clamp(88px, 9vw, 136px);
+}
+
+.content-page {
+  width: min(100%, 1440px);
+  margin-inline: auto;
+}
+
+.site-header .MuiDrawer-paper {
+  backdrop-filter: blur(18px);
+}
+
+.site-header .MuiListItemButton-root {
+  min-height: 48px;
+  margin: 3px 8px;
+  width: calc(100% - 16px);
+  border-radius: 12px;
+}
+
+.music-section [id^="scroll-container"] {
+  gap: 14px !important;
+  overflow-x: auto !important;
+  padding: 2px 2px 12px;
+  scroll-behavior: smooth;
+  scroll-snap-type: x proximity;
+}
+
+.music-section [id^="scroll-container"] > a,
+.music-section [id^="scroll-container"] > .MuiGrid-root {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+}
+
+.music-section [id^="scroll-container"]::-webkit-scrollbar {
+  height: 6px;
+}
+
+.premium-page {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.premium-page > div:first-child {
+  padding: clamp(24px, 4vw, 40px);
+  border: 1px solid rgba(162, 177, 205, 0.13);
+  border-radius: 24px;
+  background: linear-gradient(140deg, rgba(20, 29, 48, 0.96), rgba(13, 19, 34, 0.94));
+}
+
+.detail-page,
+.library-page {
+  min-height: 60vh;
+}
+
+.dashboard-page {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(32px, 5vw, 56px);
+}
+
+.welcome-panel {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(28px, 5vw, 56px);
+  border: 1px solid rgba(187, 174, 255, 0.18);
+  border-radius: 28px;
+  background:
+    radial-gradient(ellipse at 82% 18%, rgba(128, 88, 232, 0.35), transparent 34%),
+    radial-gradient(ellipse at 70% 100%, rgba(37, 170, 225, 0.13), transparent 44%),
+    linear-gradient(120deg, rgba(20, 27, 47, 0.98), rgba(13, 19, 34, 0.94));
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.22);
+}
+
+.welcome-panel::after {
+  position: absolute;
+  top: -110px;
+  right: -55px;
+  width: 320px;
+  height: 320px;
+  border: 1px solid rgba(205, 194, 255, 0.13);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 34px rgba(205, 194, 255, 0.025),
+    0 0 0 68px rgba(205, 194, 255, 0.02);
+  content: "";
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.welcome-eyebrow,
+.section-eyebrow {
+  margin: 0 0 12px;
+  color: #b9a7ff;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.welcome-title {
+  max-width: 720px;
+  margin: 0;
+  color: #f7f7ff;
+  font-size: clamp(2.4rem, 6vw, 4.6rem);
+  font-weight: 800;
+  letter-spacing: -0.065em;
+  line-height: 1.02;
+}
+
+.welcome-title span {
+  color: #b6a2ff;
+}
+
+.welcome-copy {
+  max-width: 530px;
+  margin: 18px 0 0;
+  color: #a7b3c8;
+  font-size: clamp(0.98rem, 1.7vw, 1.08rem);
+  line-height: 1.7;
+}
+
+.music-section {
+  margin: 0 0 42px;
+}
+
+.section-heading {
+  margin-bottom: 22px;
+}
+
+.section-eyebrow {
+  margin-bottom: 7px;
+  color: #8d9ab1;
+  font-size: 0.68rem;
+}
+
+.section-title {
+  margin: 0;
+  color: #f5f7fb;
+  font-size: clamp(1.45rem, 2.8vw, 2rem);
+  font-weight: 750;
+  letter-spacing: -0.04em;
+}
+
+.section-description {
+  margin: 8px 0 0;
+  color: #8d9ab1;
+  font-size: 0.95rem;
+}
+
+.song-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 196px), 1fr));
+  gap: clamp(14px, 2vw, 22px);
+  width: 100%;
+}
+
+.song-grid-item {
+  min-width: 0;
+}
+
+.song-card {
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(162, 177, 205, 0.12);
+  border-radius: 20px !important;
+  background: linear-gradient(155deg, rgba(25, 36, 57, 0.98), rgba(15, 23, 38, 0.98)) !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2) !important;
+}
+
+.song-card:hover {
+  border-color: rgba(182, 162, 255, 0.38);
+  box-shadow: 0 20px 46px rgba(0, 0, 0, 0.34) !important;
+}
+
+.song-card .MuiCardMedia-root {
+  aspect-ratio: 1;
+}
+
+.content-page h1 {
+  margin: 0 0 22px;
+  color: #f5f7fb;
+  font-size: clamp(1.55rem, 3vw, 2.1rem);
+  font-weight: 750;
+  letter-spacing: -0.045em;
+}
+
+.content-page .MuiCard-root {
+  border: 1px solid rgba(162, 177, 205, 0.12);
+  border-radius: 18px;
+  background: linear-gradient(155deg, rgba(25, 36, 57, 0.98), rgba(15, 23, 38, 0.98));
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.content-page .MuiCard-root:hover {
+  transform: translateY(-4px);
+  border-color: rgba(182, 162, 255, 0.34);
+  box-shadow: 0 20px 42px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 900px) {
+  .app-main {
+    padding-left: 88px;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+@media (max-width: 600px) {
+  .app-main {
+    padding: 88px 16px 120px 72px;
   }
-  to {
-    transform: rotate(360deg);
+
+  .welcome-panel {
+    padding: 28px 22px;
+    border-radius: 22px;
+  }
+
+  .welcome-panel::after {
+    right: -190px;
+  }
+
+  .song-grid {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 156px), 1fr));
+    gap: 12px;
+  }
+
+  .premium-page > div:nth-child(2) {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .premium-page > div:nth-child(2) > div {
+    width: auto !important;
+    margin: 0 !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
   }
 }

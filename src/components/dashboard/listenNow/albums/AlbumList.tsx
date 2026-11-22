@@ -69,9 +69,11 @@ const AlbumList = () => {
   };
 
   return (
-    <div style={{ margin: "40px 20px 20px 150px" }}>
-      {/* Section Title */}
-      <h1 style={{ color: "white" }}>Trending Albums</h1>
+    <section className="music-section">
+      <header className="section-heading">
+        <p className="section-eyebrow">Full albums worth a listen</p>
+        <h2 className="section-title">Trending Albums</h2>
+      </header>
 
       {/* Scroll buttons */}
       <div
@@ -117,7 +119,7 @@ const AlbumList = () => {
         ))}
       </Box>
       {/* End of Container for the album cards */}
-    </div>
+    </section>
   );
 };
 

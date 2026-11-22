@@ -234,13 +234,7 @@ const SearchSongResult = () => {
   };
 
   return (
-    <Box
-      sx={{
-        marginLeft: { xs: "20px", sm: "100px", md: "280px" },
-        marginTop: "120px",
-        marginRight: "20px",
-        paddingBottom: "40px",
-      }}>
+    <Box className="content-page detail-page" sx={{ paddingBottom: "40px" }}>
       <Typography
         variant="h4"
         sx={{

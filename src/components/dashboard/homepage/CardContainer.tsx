@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Grid from "@mui/material/Grid";
 import SongCard from "./SongCard";
 import { homepageURL } from "../../../services/browseApi";
 
@@ -27,22 +26,22 @@ const CardContainer = () => {
   }, []);
 
   return (
-    <div style={{ margin: "0px 10px 20px 50px" }}>
-      <h1 style={{ color: "white" }}>Trending Songs</h1>
-      {/* Responsive grid for displaying song cards */}
-      <Grid
-        container
-        spacing={{ xs: 2, sm: 2, md: 2, lg: 2 }}
-        columns={{ xs: 1, sm: 2, md: 3, lg: 5 }}>
-        {/* Map through songs and display SongCard components */}
+    <section className="music-section">
+      <header className="section-heading">
+        <p className="section-eyebrow">Picked for your next session</p>
+        <h2 className="section-title">Trending Songs</h2>
+        <p className="section-description">
+          The tracks listeners are coming back to right now.
+        </p>
+      </header>
+      <div className="song-grid">
         {songs.map((song, index) => (
-          <Grid item xs={1} sm={1} md={1} key={index}>
-            {/* Pass the song as a prop to the SongCard component */}
+          <div className="song-grid-item" key={index}>
             <SongCard song={song} />
-          </Grid>
+          </div>
         ))}
-      </Grid>
-    </div>
+      </div>
+    </section>
   );
 };
 

@@ -4,12 +4,7 @@ import ShowTrendingList from "../../listenNow/trendingList/ShowTrendingList";
 // Generic component for displaying a playlist
 const ShowPlaylist = () => {
   return (
-    <div
-      style={{
-        marginTop: "100px",
-        marginLeft: "280px",
-        width: "80%",
-      }}>
+    <div className="content-page detail-page">
       {/* Reusing the ShowTrendingList component */}
       <ShowTrendingList />
     </div>

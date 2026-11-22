@@ -5,7 +5,6 @@ import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
-import CssBaseline from "@mui/material/CssBaseline";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
@@ -44,10 +43,10 @@ const drawerWidth = 240;
 
 // Styling constants
 const COLORS = {
-  primary: "#19272e",
-  secondary: "#25aae1",
-  text: "#fff",
-  hover: "#1f2f37",
+  primary: "#111a2b",
+  secondary: "#a78bfa",
+  text: "#f5f7fb",
+  hover: "rgba(167, 139, 250, 0.14)",
 } as const;
 
 const STYLES = {
@@ -57,14 +56,19 @@ const STYLES = {
     width: "100%",
   },
   hoverButton: {
-    "&:hover": { backgroundColor: COLORS.secondary },
+    borderRadius: 2,
+    "&:hover": {
+      backgroundColor: COLORS.hover,
+      color: COLORS.text,
+    },
   },
   navigationButton: {
-    my: 2,
+    my: 1,
     color: COLORS.text,
     display: { xs: "none", sm: "flex", md: "flex" },
+    borderRadius: 999,
     "&:hover": {
-      backgroundColor: COLORS.secondary,
+      backgroundColor: COLORS.hover,
     },
   },
 } as const;
@@ -211,8 +215,11 @@ const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
   "& .MuiDrawer-paper": {
-    backgroundColor: "#19272e",
-    color: "#fff", // Set the background color here
+    backgroundColor: "#0c1423",
+    backgroundImage:
+      "linear-gradient(180deg, rgba(17, 26, 43, 0.98), rgba(8, 13, 24, 0.98))",
+    borderRight: "1px solid rgba(148, 163, 184, 0.12)",
+    color: COLORS.text,
     width: drawerWidth,
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
@@ -230,10 +237,13 @@ const Drawer = styled(MuiDrawer, {
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  border: "1px solid rgba(148, 163, 184, 0.16)",
+  borderRadius: 999,
+  backgroundColor: "rgba(255, 255, 255, 0.07)",
+  transition: "border-color 160ms ease, background-color 160ms ease",
   "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
+    borderColor: "rgba(182, 162, 255, 0.5)",
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
   },
   marginLeft: 0,
   width: "100%",
@@ -350,17 +360,29 @@ const HeaderV2 = () => {
   }, []);
 
   return (
-    <Box sx={{ display: "flex" }}>
-      <CssBaseline />
-      <AppBar position="fixed" open={open} sx={{ backgroundColor: "#19272e" }}>
-        <Toolbar>
+    <Box className="site-header" sx={{ display: "flex", width: "100%" }}>
+      <AppBar
+        position="fixed"
+        open={open}
+        sx={{
+          backgroundColor: "rgba(8, 13, 24, 0.84)",
+          backdropFilter: "blur(18px)",
+          borderBottom: "1px solid rgba(148, 163, 184, 0.14)",
+          boxShadow: "none",
+        }}>
+        <Toolbar
+          sx={{
+            minHeight: { xs: 64, sm: 72 },
+            gap: { xs: 0.5, sm: 1.25 },
+            px: { xs: 1.5, sm: 3 },
+          }}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
             sx={{
-              marginRight: 5,
+              marginRight: { xs: 1, sm: 5 },
               ...(open && { display: "none" }),
             }}>
             <MenuIcon />
@@ -411,23 +433,30 @@ const HeaderV2 = () => {
             <Typography
               variant="h5"
               noWrap
-              component="a"
-              href="#app-bar-with-responsive-menu"
+              component="span"
               sx={{
                 mr: 2,
                 display: { xs: "none", md: "flex" },
                 flexGrow: 1,
-                fontFamily: "Lemon, serif",
-                fontWeight: 700,
+                fontFamily: '"Inter", sans-serif',
+                fontWeight: 800,
+                letterSpacing: "-0.05em",
                 color: "inherit",
                 textDecoration: "none",
+                "&:hover": { color: COLORS.secondary },
               }}>
               Music
             </Typography>
           </Link>
 
           {/* Search input with type toggle */}
-          <Box sx={{ display: "flex", flexGrow: 1, maxWidth: "600px" }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexGrow: 1,
+              minWidth: 0,
+              maxWidth: { xs: "none", sm: "600px" },
+            }}>
             {/* Search type toggle */}
             <ToggleButtonGroup
               value={searchType}
@@ -435,10 +464,13 @@ const HeaderV2 = () => {
               onChange={(_, newType) => newType && setSearchType(newType)}
               aria-label="search type"
               sx={{
-                mr: 1,
+                mr: { xs: 0.5, sm: 1 },
+                gap: { xs: 0.25, sm: 0.5 },
                 "& .MuiToggleButton-root": {
+                  minWidth: { xs: 34, sm: 72 },
                   color: COLORS.text,
-                  borderColor: alpha(COLORS.text, 0.3),
+                  borderColor: alpha(COLORS.text, 0.18),
+                  borderRadius: "999px !important",
                   "&.Mui-selected": {
                     backgroundColor: alpha(COLORS.secondary, 0.2),
                     color: COLORS.text,
@@ -456,7 +488,7 @@ const HeaderV2 = () => {
                   key={type.value}
                   value={type.value}
                   aria-label={type.label}
-                  sx={{ px: 1, py: 0.5 }}>
+                  sx={{ px: { xs: 1, sm: 1.25 }, py: 0.65 }}>
                   {type.icon}
                   <Typography
                     variant="caption"
@@ -518,11 +550,11 @@ const HeaderV2 = () => {
                 data-testid="music-premium"
                 onClick={handleCloseNavMenu}
                 sx={{
-                  my: 2,
-                  color: "white",
+                  my: 1,
+                  color: "#f5f7fb",
                   display: { xs: "none", sm: "flex", md: "flex" },
                   "&:hover": {
-                    backgroundColor: "#25aae1",
+                    backgroundColor: alpha(COLORS.secondary, 0.16),
                   },
                 }}>
                 Get Music Premium

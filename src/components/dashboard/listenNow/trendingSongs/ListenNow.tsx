@@ -69,9 +69,11 @@ const ListenNow: React.FC = () => {
   };
 
   return (
-    <div style={{ margin: "40px 20px 20px 150px" }}>
-      {/* Section Title */}
-      <h1 style={{ color: "white" }}>Popular Songs</h1>
+    <section className="music-section">
+      <header className="section-heading">
+        <p className="section-eyebrow">Fresh from the charts</p>
+        <h2 className="section-title">Popular Songs</h2>
+      </header>
 
       {/* Scroll Buttons */}
       <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -108,7 +110,7 @@ const ListenNow: React.FC = () => {
           </Grid>
         ))}
       </Box>
-    </div>
+    </section>
   );
 };
 

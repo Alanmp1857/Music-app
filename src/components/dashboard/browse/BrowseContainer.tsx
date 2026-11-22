@@ -2,12 +2,11 @@ import Playlist from "./playlist/Playlist";
 
 const BrowseContainer = () => {
   return (
-    <div style={{ marginLeft: "100px" }}>
+    <div className="content-page browse-page">
       <Playlist
         language="English"
         query="english"
         containerId="scroll-container-english"
-        isFirst={true}
       />
       <Playlist
         language="Hindi"

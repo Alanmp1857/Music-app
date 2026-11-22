@@ -108,23 +108,15 @@ const ArtistSongs: React.FC = () => {
           justifyContent: "center",
           alignItems: "center",
           minHeight: "60vh",
-          backgroundColor: "#121c21",
         }}>
-        <CircularProgress sx={{ color: "#25aae1" }} size={60} />
+        <CircularProgress color="primary" size={60} />
       </Box>
     );
   }
 
   return (
     <Box
-      sx={{
-        marginLeft: { xs: "20px", sm: "100px", md: "280px" },
-        marginTop: "120px",
-        marginRight: "20px",
-        marginBottom: "40px",
-        backgroundColor: "#121c21",
-        minHeight: "100vh",
-      }}>
+      className="content-page detail-page">
       {/* Artist Header */}
       {artistInfo && (
         <Box

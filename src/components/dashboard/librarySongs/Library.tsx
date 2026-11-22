@@ -47,8 +47,11 @@ const Library = () => {
   };
 
   return (
-    <div style={{ margin: "100px 10px 20px 100px" }}>
-      <h1 style={{ color: "white" }}>Favourite Songs</h1>
+    <div className="content-page library-page">
+      <header className="section-heading">
+        <p className="section-eyebrow">Saved for later</p>
+        <h1>Favourite Songs</h1>
+      </header>
       <Grid
         container
         spacing={{ xs: 2, sm: 2, md: 2 }}
