@@ -1,48 +1,58 @@
 import React, { useEffect, useState } from "react";
-import { Box, Grid, IconButton } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { Box, Grid, IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
 import { searchPlaylistURL } from "../../../../services/browseApi";
 import PlaylistCard from "../PlaylistCard";
 
+// Define the Playlist interface
 interface Image {
   url: string;
 }
 
-// Define the Playlist interface
 interface PlayList {
   id: string;
   name: string;
   image: Image[];
 }
 
-// Default query string
-const query = "hindi";
+interface PlaylistProps {
+  language: string;
+  query: string;
+  containerId: string;
+  isFirst?: boolean;
+}
 
-// Component for displaying trending Hindi playlists
-const HindiPlaylist = () => {
+// Generic component for displaying trending playlists by language
+const Playlist: React.FC<PlaylistProps> = ({
+  language,
+  query,
+  containerId,
+  isFirst = false,
+}) => {
   // State to hold playlists and scroll position
   const [playlists, setPlaylists] = useState<PlayList[]>([]);
   const [scrollLeft, setScrollLeft] = useState(0);
 
+  // Fetch playlists data from the server when the component mounts
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await fetch(`${searchPlaylistURL}?query=${query}`);
         const response = await data.json();
+        console.log("Playlist", response.data, data);
         setPlaylists(response.data.results);
-        // console.log(response.data.results);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
     fetchData();
-  }, []);
+  }, [query]);
 
   // Function to handle scrolling left or right
   const handleScroll = (scrollDirection: "left" | "right") => {
-    const container = document.getElementById("scroll-container-3");
+    const container = document.getElementById(containerId);
 
     if (container) {
       const visibleWidth = container.clientWidth;
@@ -65,8 +75,11 @@ const HindiPlaylist = () => {
   };
 
   return (
-    <div style={{ margin: "40px 20px 20px 30px" }}>
-      <h1 style={{ color: "white" }}>Trending Playlists - Hindi</h1>
+    <div
+      style={{
+        margin: isFirst ? "100px 20px 20px 30px" : "40px 20px 20px 30px",
+      }}>
+      <h1 style={{ color: "white" }}>Trending Playlists - {language}</h1>
       {/* Navigation buttons for scrolling */}
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <IconButton onClick={() => handleScroll("left")}>
@@ -78,7 +91,7 @@ const HindiPlaylist = () => {
       </div>
       {/* Container for playlist cards with scroll functionality */}
       <Box
-        id="scroll-container-3"
+        id={containerId}
         sx={{
           display: "flex",
           overflowX: "hidden", // Make the container scrollable
@@ -105,4 +118,4 @@ const HindiPlaylist = () => {
   );
 };
 
-export default HindiPlaylist;
+export default Playlist;

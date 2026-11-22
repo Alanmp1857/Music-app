@@ -1,8 +1,8 @@
 import React from "react";
 import ShowTrendingList from "../../listenNow/trendingList/ShowTrendingList";
 
-// Component for displaying the English playlist
-const ShowPlaylistEnglish = () => {
+// Generic component for displaying a playlist
+const ShowPlaylist = () => {
   return (
     <div
       style={{
@@ -16,4 +16,4 @@ const ShowPlaylistEnglish = () => {
   );
 };
 
-export default ShowPlaylistEnglish;
+export default ShowPlaylist;

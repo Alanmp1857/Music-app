@@ -24,7 +24,6 @@ interface Song {
 const ListenNow: React.FC = () => {
   const [songs, setSongs] = useState<Song[]>([]);
   const [scrollLeft, setScrollLeft] = useState(0);
-  const [currentlyPlaying, setCurrentlyPlaying] = useState<string | null>(null);
 
   const query = "popular english";
   const limit = 20;
@@ -69,14 +68,6 @@ const ListenNow: React.FC = () => {
     }
   };
 
-  const handleSongPlay = (songId: string) => {
-    setCurrentlyPlaying(songId);
-  };
-
-  const handleSongPause = () => {
-    setCurrentlyPlaying(null);
-  };
-
   return (
     <div style={{ margin: "40px 20px 20px 150px" }}>
       {/* Section Title */}
@@ -113,9 +104,6 @@ const ListenNow: React.FC = () => {
               name={song.name}
               singer={song.primaryArtists}
               downloadUrl={song.downloadUrl[4].url}
-              isPlaying={currentlyPlaying === song.id}
-              onPlay={() => handleSongPlay(song.id)}
-              onPause={handleSongPause}
             />
           </Grid>
         ))}

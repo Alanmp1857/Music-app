@@ -19,8 +19,16 @@ import MusicNoteIcon from "@mui/icons-material/MusicNote";
 import ListItemText from "@mui/material/ListItemText";
 import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { Link } from "react-router-dom";
-import { Avatar, Button, Menu, MenuItem, Tooltip } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  Avatar,
+  Button,
+  Menu,
+  MenuItem,
+  Tooltip,
+  ToggleButton,
+  ToggleButtonGroup,
+} from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import InputBase from "@mui/material/InputBase";
 import { alpha } from "@mui/material/styles";
@@ -30,10 +38,122 @@ import SearchSong from "../dashboard/searchSong/SearchSong";
 import PlayCircleRoundedIcon from "@mui/icons-material/PlayCircleRounded";
 import ManageSearchRoundedIcon from "@mui/icons-material/ManageSearchRounded";
 import RadioRoundedIcon from "@mui/icons-material/RadioRounded";
+import PersonIcon from "@mui/icons-material/Person";
 
 const drawerWidth = 240;
+
+// Styling constants
+const COLORS = {
+  primary: "#19272e",
+  secondary: "#25aae1",
+  text: "#fff",
+  hover: "#1f2f37",
+} as const;
+
+const STYLES = {
+  link: {
+    textDecoration: "none",
+    color: COLORS.text,
+    width: "100%",
+  },
+  hoverButton: {
+    "&:hover": { backgroundColor: COLORS.secondary },
+  },
+  navigationButton: {
+    my: 2,
+    color: COLORS.text,
+    display: { xs: "none", sm: "flex", md: "flex" },
+    "&:hover": {
+      backgroundColor: COLORS.secondary,
+    },
+  },
+} as const;
+
+// Navigation configuration
+interface NavigationItem {
+  id: string;
+  label: string;
+  path: string;
+  icon: React.ReactNode;
+  requiresAuth?: boolean;
+}
+
+const navigationItems: NavigationItem[] = [
+  {
+    id: "listen-now",
+    label: "Listen Now",
+    path: "/listen-now",
+    icon: <PlayCircleRoundedIcon sx={{ color: COLORS.text }} />,
+  },
+  {
+    id: "browse",
+    label: "Browse",
+    path: "/browse",
+    icon: <ManageSearchRoundedIcon sx={{ color: COLORS.text }} />,
+  },
+  {
+    id: "library",
+    label: "Library",
+    path: "/library",
+    icon: <RadioRoundedIcon sx={{ color: COLORS.text }} />,
+    requiresAuth: true,
+  },
+];
+
+// Search types
+type SearchType = "songs" | "artists";
+
+const searchTypes: {
+  value: SearchType;
+  label: string;
+  icon: React.ReactNode;
+}[] = [
+  { value: "songs", label: "Songs", icon: <SearchIcon /> },
+  { value: "artists", label: "Artists", icon: <PersonIcon /> },
+];
+
 const pages = ["Get Music Premium"];
 const settings = ["Account", "Favourites"];
+
+// Reusable NavigationItem component
+interface NavigationItemProps {
+  item: NavigationItem;
+  isAuthenticated: boolean;
+  onLoginClick: (event: any) => void;
+}
+
+const NavigationItemComponent: React.FC<NavigationItemProps> = ({
+  item,
+  isAuthenticated,
+  onLoginClick,
+}) => {
+  const requiresAuth = item.requiresAuth && !isAuthenticated;
+
+  if (requiresAuth) {
+    return (
+      <ListItem disablePadding data-testid={item.id}>
+        <ListItemButton
+          onClick={onLoginClick}
+          style={{ color: COLORS.text }}
+          sx={STYLES.hoverButton}>
+          <ListItemIcon>{item.icon}</ListItemIcon>
+          <ListItemText sx={{ color: COLORS.text }}>{item.label}</ListItemText>
+        </ListItemButton>
+      </ListItem>
+    );
+  }
+
+  return (
+    <ListItem disablePadding data-testid={item.id}>
+      <Link to={item.path} style={STYLES.link}>
+        <ListItemButton sx={STYLES.hoverButton}>
+          <ListItemIcon>{item.icon}</ListItemIcon>
+          <ListItemText>{item.label}</ListItemText>
+        </ListItemButton>
+      </Link>
+    </ListItem>
+  );
+};
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
@@ -151,6 +271,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const HeaderV2 = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
@@ -159,11 +280,21 @@ const HeaderV2 = () => {
     null
   );
   const [searchQuery, setSearchQuery] = useState("");
+  const [searchType, setSearchType] = useState<SearchType>("songs");
 
   const { user, isAuthenticated, loginWithPopup } = useAuth0();
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
+  };
+
+  const handleSearchKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && searchQuery.trim()) {
+      // Navigate to search results page with query and type
+      const query = searchQuery.trim();
+      navigate(`/search/${searchType}/${encodeURIComponent(query)}`);
+      setSearchQuery(""); // Clear search query
+    }
   };
 
   const handleDrawerOpen = () => {
@@ -295,24 +426,67 @@ const HeaderV2 = () => {
             </Typography>
           </Link>
 
-          {/* Search input */}
-          <Search
-            data-testid="search-input"
-            sx={{
-              flexGrow: 1,
-              display: { xs: "flex", sm: "flex", md: "flex" },
-            }}>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
+          {/* Search input with type toggle */}
+          <Box sx={{ display: "flex", flexGrow: 1, maxWidth: "600px" }}>
+            {/* Search type toggle */}
+            <ToggleButtonGroup
+              value={searchType}
+              exclusive
+              onChange={(_, newType) => newType && setSearchType(newType)}
+              aria-label="search type"
+              sx={{
+                mr: 1,
+                "& .MuiToggleButton-root": {
+                  color: COLORS.text,
+                  borderColor: alpha(COLORS.text, 0.3),
+                  "&.Mui-selected": {
+                    backgroundColor: alpha(COLORS.secondary, 0.2),
+                    color: COLORS.text,
+                    "&:hover": {
+                      backgroundColor: alpha(COLORS.secondary, 0.3),
+                    },
+                  },
+                  "&:hover": {
+                    backgroundColor: alpha(COLORS.text, 0.1),
+                  },
+                },
+              }}>
+              {searchTypes.map((type) => (
+                <ToggleButton
+                  key={type.value}
+                  value={type.value}
+                  aria-label={type.label}
+                  sx={{ px: 1, py: 0.5 }}>
+                  {type.icon}
+                  <Typography
+                    variant="caption"
+                    sx={{ ml: 0.5, display: { xs: "none", sm: "inline" } }}>
+                    {type.label}
+                  </Typography>
+                </ToggleButton>
+              ))}
+            </ToggleButtonGroup>
+
+            {/* Search input */}
+            <Search
               data-testid="search-input"
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-              value={searchQuery}
-              onChange={(e: any) => handleSearch(e.target.value)}
-            />
-          </Search>
+              sx={{
+                flexGrow: 1,
+                display: { xs: "flex", sm: "flex", md: "flex" },
+              }}>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                data-testid="search-input"
+                placeholder={`Search ${searchType}…`}
+                inputProps={{ "aria-label": "search" }}
+                value={searchQuery}
+                onChange={(e: any) => handleSearch(e.target.value)}
+                onKeyPress={handleSearchKeyPress}
+              />
+            </Search>
+          </Box>
 
           {/* menu */}
           <IconButton
@@ -404,8 +578,8 @@ const HeaderV2 = () => {
             borderRadius: "10px",
           }}>
           {searchQuery && (
-            <Link to={"/search"}>
-              <SearchSong query={searchQuery} />
+            <Link to={`/search/${searchType}`}>
+              <SearchSong query={searchQuery} searchType={searchType} />
             </Link>
           )}
         </div>
@@ -425,63 +599,14 @@ const HeaderV2 = () => {
         </DrawerHeader>
         <Divider />
         <List>
-          {/* Listen Now */}
-          <ListItem disablePadding data-testid="listen-now">
-            <Link
-              to="/listen-now"
-              style={{ textDecoration: "none", color: "white", width: "100%" }}>
-              <ListItemButton
-                sx={{ "&:hover": { backgroundColor: "#25aae1" } }}>
-                <ListItemIcon>
-                  <PlayCircleRoundedIcon sx={{ color: "white" }} />
-                </ListItemIcon>
-                <ListItemText>Listen Now</ListItemText>
-              </ListItemButton>
-            </Link>
-          </ListItem>
-          {/* Browse */}
-          <ListItem disablePadding data-testid="browse">
-            <Link
-              to="/browse"
-              style={{ textDecoration: "none", color: "white", width: "100%" }}>
-              <ListItemButton
-                sx={{ "&:hover": { backgroundColor: "#25aae1" } }}>
-                <ListItemIcon>
-                  <ManageSearchRoundedIcon sx={{ color: "white" }} />
-                </ListItemIcon>
-                <ListItemText>Browse</ListItemText>
-              </ListItemButton>
-            </Link>
-          </ListItem>
-          {/* Library */}
-          <ListItem disablePadding data-testid="library">
-            {/* Check if the user is authenticated */}
-            {isAuthenticated ? (
-              // Authenticated: Redirect to Library
-              <Link
-                to="/library"
-                style={{ textDecoration: "none", color: "white" }}>
-                <ListItemButton
-                  sx={{ "&:hover": { backgroundColor: "#25aae1" } }}>
-                  <ListItemIcon>
-                    <RadioRoundedIcon sx={{ color: "white" }} />
-                  </ListItemIcon>
-                  <ListItemText sx={{ color: "white" }}>Library</ListItemText>
-                </ListItemButton>
-              </Link>
-            ) : (
-              // Not authenticated: Show login button
-              <ListItemButton
-                onClick={handleLoginClick}
-                style={{ color: "white" }}
-                sx={{ "&:hover": { backgroundColor: "#25aae1" } }}>
-                <ListItemIcon>
-                  <RadioRoundedIcon sx={{ color: "white" }} />
-                </ListItemIcon>
-                <ListItemText sx={{ color: "white" }}>Library</ListItemText>
-              </ListItemButton>
-            )}
-          </ListItem>
+          {navigationItems.map((item) => (
+            <NavigationItemComponent
+              key={item.id}
+              item={item}
+              isAuthenticated={isAuthenticated}
+              onLoginClick={handleLoginClick}
+            />
+          ))}
         </List>
 
         <Divider />

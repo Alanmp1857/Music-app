@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -7,15 +7,13 @@ import IconButton from "@mui/material/IconButton";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
 import { CardActions } from "@mui/material";
+import { useMusicPlayer } from "../../../../contexts/MusicPlayerContext";
 
 interface ListenNowCardProps {
   image: string;
   name: string;
   singer: string;
   downloadUrl: string;
-  isPlaying: boolean;
-  onPlay: () => void;
-  onPause: () => void;
 }
 
 const ListenNowCard: React.FC<ListenNowCardProps> = ({
@@ -23,28 +21,29 @@ const ListenNowCard: React.FC<ListenNowCardProps> = ({
   name,
   singer,
   downloadUrl,
-  isPlaying,
-  onPlay,
-  onPause,
 }) => {
-  // Ref to the audio element
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const { playTrack, pauseTrack, currentTrack, isPlaying } = useMusicPlayer();
 
   // Handler for play/pause button click
   const handlePlayPause = () => {
-    if (audioRef.current) {
-      // If audio is playing, pause it; otherwise, play it
-      isPlaying ? audioRef.current.pause() : audioRef.current.play();
-
-      // Trigger onPlay or onPause callback
-      isPlaying ? onPause() : onPlay();
+    const currentTrackUrl = typeof currentTrack === "string" ? currentTrack : currentTrack?.url;
+    
+    if (currentTrackUrl === downloadUrl && isPlaying) {
+      pauseTrack();
+    } else {
+      playTrack({
+        url: downloadUrl,
+        name: name,
+        artist: singer || "Unknown Artist",
+        image: image || null,
+      });
     }
   };
 
-  // Handler for the end of audio playback
-  const handleEnded = () => {
-    onPause(); // Triggered when audio playback ends
-  };
+  const isCurrentSong = (() => {
+    const currentTrackUrl = typeof currentTrack === "string" ? currentTrack : currentTrack?.url;
+    return currentTrackUrl === downloadUrl && isPlaying;
+  })();
 
   return (
     <Card
@@ -88,7 +87,7 @@ const ListenNowCard: React.FC<ListenNowCardProps> = ({
         }}>
         {/* Play/pause controls */}
         <IconButton aria-label="play/pause" onClick={handlePlayPause}>
-          {!isPlaying ? (
+          {!isCurrentSong ? (
             <PlayArrowIcon
               sx={{
                 height: 38,
@@ -100,11 +99,6 @@ const ListenNowCard: React.FC<ListenNowCardProps> = ({
             <PauseIcon sx={{ height: 38, width: 38, color: "gray" }} />
           )}
         </IconButton>
-
-        {/* Audio element */}
-        <audio ref={audioRef} onEnded={handleEnded}>
-          <source src={downloadUrl} type="audio/mp4" />
-        </audio>
       </CardActions>
     </Card>
   );

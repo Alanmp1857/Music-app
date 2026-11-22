@@ -17,7 +17,7 @@ interface PlayList {
   image: Image[];
 }
 
-const query = "popular";
+const query = "trending";
 
 const TrendingList = () => {
   // State to store playlists
@@ -33,7 +33,7 @@ const TrendingList = () => {
       try {
         const data = await fetch(`${searchPlaylistURL}?query=${query}`);
         const response = await data.json();
-        // console.log(response.data);
+        console.log("Trending List", response.data, data);
         setPlaylists(response.data.results);
       } catch (error) {
         console.error("Error fetching data:", error);

@@ -1,6 +1,6 @@
 describe("<HomePage />", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:3000/");
+    cy.visit("/");
   });
 
   it("should render the input search field", () => {

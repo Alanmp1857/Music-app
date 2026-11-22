@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
   Card,
@@ -12,6 +12,7 @@ import {
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
 import { playlistURL } from "../../../../services/browseApi";
+import { useMusicPlayer } from "../../../../contexts/MusicPlayerContext";
 
 interface Image {
   url: string;
@@ -37,45 +38,25 @@ interface Song {
 const ShowTrendingList: React.FC = () => {
   // Get the playlist ID from the route parameters
   const { id } = useParams();
+  const { playTrack, pauseTrack, currentTrack, isPlaying } = useMusicPlayer();
 
   // State for storing search results
   const [searchResults, setSearchResults] = useState<Song[]>([]);
 
-  // State to track the ID of the currently playing song
-  const [currentSongId, setCurrentSongId] = useState<string | null>(null);
-
-  // Reference for the audio element
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-
-  // Function to play a song
-  const playSong = (songId: string) => {
-    const song = searchResults.find((song) => song.id === songId);
-    if (song && audioRef.current) {
-      const downloadUrl = song.downloadUrl[4]?.url || ""; // Access the url property
-      audioRef.current.src = downloadUrl;
-      audioRef.current.play();
-      setCurrentSongId(songId);
-    }
-  };
-
-  // Function to pause the currently playing song
-  const pauseSong = () => {
-    if (audioRef.current) {
-      audioRef.current.pause();
-      setCurrentSongId(null);
-    }
-  };
-
   // Function to handle play/pause button click
-  const handlePlayPause = (songId: string) => {
-    if (currentSongId === songId) {
-      if (audioRef.current?.paused) {
-        playSong(songId);
-      } else {
-        pauseSong();
-      }
+  const handlePlayPause = (song: Song) => {
+    const downloadUrl = song.downloadUrl[4]?.url || "";
+    const currentTrackUrl = typeof currentTrack === "string" ? currentTrack : currentTrack?.url;
+    
+    if (currentTrackUrl === downloadUrl && isPlaying) {
+      pauseTrack();
     } else {
-      playSong(songId);
+      playTrack({
+        url: downloadUrl,
+        name: song.name,
+        artist: song.primaryArtists?.join(", ") || "Unknown Artist",
+        image: song.image[2]?.url || null,
+      });
     }
   };
 
@@ -140,20 +121,20 @@ const ShowTrendingList: React.FC = () => {
                 {/* Play controls */}
                 <IconButton
                   aria-label="play/pause"
-                  onClick={() => handlePlayPause(song.id)}>
-                  {currentSongId === song.id && !audioRef.current?.paused ? (
-                    <PauseIcon sx={{ height: 38, width: 38, color: "gray" }} />
-                  ) : (
-                    <PlayArrowIcon
-                      sx={{ height: 38, width: 38, color: "gray" }}
-                    />
-                  )}
+                  onClick={() => handlePlayPause(song)}>
+                  {(() => {
+                    const downloadUrl = song.downloadUrl[4]?.url || "";
+                    const currentTrackUrl = typeof currentTrack === "string" ? currentTrack : currentTrack?.url;
+                    const isCurrentSong = currentTrackUrl === downloadUrl && isPlaying;
+                    return isCurrentSong ? (
+                      <PauseIcon sx={{ height: 38, width: 38, color: "gray" }} />
+                    ) : (
+                      <PlayArrowIcon
+                        sx={{ height: 38, width: 38, color: "gray" }}
+                      />
+                    );
+                  })()}
                 </IconButton>
-
-                {/* Audio element */}
-                <audio ref={audioRef}>
-                  <source src={song.downloadUrl[4].url} type="audio/mp4" />
-                </audio>
               </CardActions>
             </Card>
           </Grid>

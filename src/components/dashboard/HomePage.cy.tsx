@@ -1,6 +1,6 @@
 import React from "react";
 import HomePage from "./HomePage";
-import { mount } from "cypress/react18";
+import { mount } from "cypress/react";
 import { MemoryRouter } from "react-router";
 
 describe("<HomePage />", () => {

@@ -29,7 +29,7 @@ const AlbumList = () => {
     const fetchData = async () => {
       try {
         const data = await fetch(
-          `https://saavn.dev/api/search/albums?query=${query}&limit=10`
+          `https://saavn.sumit.co/api/search/albums?query=${query}&limit=10`
         );
         const response = await data.json();
         // Set the fetched albums in the state

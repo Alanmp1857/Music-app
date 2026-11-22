@@ -1,16 +1,24 @@
 // listenNow.spec.ts
 
-import { mount } from "cypress/react18";
+import { mount } from "cypress/react";
 import ListenNow from "./trendingSongs/ListenNow";
+import { MusicPlayerProvider } from "../../../contexts/MusicPlayerContext";
+
+const mountListenNow = () =>
+  mount(
+    <MusicPlayerProvider>
+      <ListenNow />
+    </MusicPlayerProvider>
+  );
 
 describe("ListenNow Component Tests", () => {
   it("renders without crashing", () => {
-    mount(<ListenNow />);
+    mountListenNow();
     // You can add assertions based on your component structure
   });
 
   it("scrolls left and right on button click", () => {
-    mount(<ListenNow />);
+    mountListenNow();
     cy.get('[aria-label="Scroll left"]').click();
     // Add assertions to check if the scroll position has changed
     cy.get('[aria-label="Scroll right"]').click();
@@ -22,6 +30,7 @@ describe("ListenNow Component Tests", () => {
   });
 
   it("contains popular songs title", () => {
-    cy.contains("Trending Songs");
+    mountListenNow();
+    cy.contains("Popular Songs");
   });
 });

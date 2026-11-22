@@ -12,13 +12,11 @@ import {
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PauseIcon from "@mui/icons-material/Pause";
+import { useMusicPlayer } from "../../../contexts/MusicPlayerContext";
 
 const Library = () => {
   const [favouriteList, setFavouriteList] = useState([]);
-  const [audioRef, setAudioRef] = useState<HTMLAudioElement | null>(null);
-  const [isPlayingMap, setIsPlayingMap] = useState<{ [key: number]: boolean }>(
-    {}
-  );
+  const { playTrack, pauseTrack, currentTrack, isPlaying } = useMusicPlayer();
 
   useEffect(() => {
     const fetchFavouriteSongs = async () => {
@@ -30,20 +28,21 @@ const Library = () => {
       }
     };
     fetchFavouriteSongs();
-  }, [favouriteList]);
+  }, []);
 
-  const handlePlayPause = (downloadUrl: string, songId: number) => {
-    if (audioRef) {
-      if (audioRef.src === downloadUrl) {
-        // Pause if the same song is playing
-        audioRef.pause();
-        setIsPlayingMap((prevMap) => ({ ...prevMap, [songId]: false }));
-      } else {
-        // Change the song if a different one is playing
-        audioRef.src = downloadUrl;
-        audioRef.play();
-        setIsPlayingMap((prevMap) => ({ ...prevMap, [songId]: true }));
-      }
+  const handlePlayPause = (song: any) => {
+    const downloadUrl = song.downloadUrl;
+    const currentTrackUrl = typeof currentTrack === "string" ? currentTrack : currentTrack?.url;
+    
+    if (currentTrackUrl === downloadUrl && isPlaying) {
+      pauseTrack();
+    } else {
+      playTrack({
+        url: downloadUrl,
+        name: song.name,
+        artist: "Unknown Artist",
+        image: song.image || null,
+      });
     }
   };
 
@@ -90,14 +89,18 @@ const Library = () => {
                 }}>
                 <IconButton
                   aria-label="play/pause"
-                  onClick={() => handlePlayPause(song.downloadUrl, song.id)}>
-                  {isPlayingMap[song.id] ? (
-                    <PauseIcon sx={{ height: 38, width: 38, color: "gray" }} />
-                  ) : (
-                    <PlayArrowIcon
-                      sx={{ height: 38, width: 38, color: "gray" }}
-                    />
-                  )}
+                  onClick={() => handlePlayPause(song)}>
+                  {(() => {
+                    const currentTrackUrl = typeof currentTrack === "string" ? currentTrack : currentTrack?.url;
+                    const isCurrentSong = currentTrackUrl === song.downloadUrl && isPlaying;
+                    return isCurrentSong ? (
+                      <PauseIcon sx={{ height: 38, width: 38, color: "gray" }} />
+                    ) : (
+                      <PlayArrowIcon
+                        sx={{ height: 38, width: 38, color: "gray" }}
+                      />
+                    );
+                  })()}
                 </IconButton>
 
                 <DeleteIcon
@@ -108,8 +111,6 @@ const Library = () => {
             </Card>
           </Grid>
         ))}
-        {/* Audio element */}
-        <audio ref={(ref) => setAudioRef(ref)} />
       </Grid>
     </div>
   );

@@ -1,19 +1,27 @@
-// export const baseURL = "https://saavn.dev/modules?language=";
-export const baseURL = "https://saavn.dev";
+// const BASE_URL = "https://saavn.sumit.co";
+const BASE_URL = "https://saavn.bycomsolutions.com";
 
-//new url
-export const songURL = "https://saavn.dev/api/songs";
-export const albumURL = "https://saavn.dev/api/albums";
-export const playlistURL = "https://saavn.dev/api/playlists";
-export const searchSongURL = "https://saavn.dev/api/search/songs";
-export const searchAlbumURL = "https://saavn.dev/api/search/albums";
-export const searchArtistURL = "https://saavn.dev/api/search/artists";
-export const searchPlaylistURL = "https://saavn.dev/api/search/playlists";
-export const homepageURL = "https://saavn.dev/api/playlists?id=110858205";
+// Core API paths
+const API = `${BASE_URL}/api`;
+const SEARCH = `${API}/search`;
 
-/////////////////////
+// Exported URLs
+export const baseURL = BASE_URL;
 
-export const popularPlaylistURL = "https://saavn.dev/playlists?id=";
-export const albumByIdURL = "https://saavn.dev/albums?id=";
-export const searchSongResultURL = `https://saavn.dev/songs?id=`;
-export const searchTrendingPlaylistURL = `https://saavn.dev/search/playlists?query=`;
+export const songURL = `${API}/songs`;
+export const albumURL = `${API}/albums`;
+export const playlistURL = `${API}/playlists`;
+export const homepageURL = `${API}/playlists?id=107605145`;
+
+// Search URLs
+export const searchSongURL = `${SEARCH}/songs`;
+export const searchAlbumURL = `${SEARCH}/albums`;
+export const searchArtistURL = `${SEARCH}/artists`;
+export const searchPlaylistURL = `${SEARCH}/playlists`;
+
+// Additional endpoints (non-API root)
+export const popularPlaylistURL = `${BASE_URL}/playlists?id=`;
+export const albumByIdURL = `${BASE_URL}/albums?id=`;
+export const searchSongResultURL = `${BASE_URL}/songs?id=`;
+export const searchTrendingPlaylistURL = `${BASE_URL}/search/playlists?query=`;
+export const artistSongsURL = `${API}/search/artists?query=`;

@@ -1,14 +1,29 @@
-import EnglishPlaylist from "./englishPlaylist/EnglishPlaylist";
-import HindiPlaylist from "./hindiPlaylist/HindiPlaylist";
-import MalayalamPlaylist from "./malayalamPlaylist/MalayalamPlaylist";
-import TeluguPlaylist from "./teluguPlaylist/TeluguPlaylist";
+import Playlist from "./playlist/Playlist";
+
 const BrowseContainer = () => {
   return (
     <div style={{ marginLeft: "100px" }}>
-      <EnglishPlaylist />
-      <HindiPlaylist />
-      <TeluguPlaylist />
-      <MalayalamPlaylist />
+      <Playlist
+        language="English"
+        query="english"
+        containerId="scroll-container-english"
+        isFirst={true}
+      />
+      <Playlist
+        language="Hindi"
+        query="hindi"
+        containerId="scroll-container-hindi"
+      />
+      <Playlist
+        language="Telugu"
+        query="telugu"
+        containerId="scroll-container-telugu"
+      />
+      <Playlist
+        language="Malayalam"
+        query="malayalam"
+        containerId="scroll-container-malayalam"
+      />
     </div>
   );
 };
